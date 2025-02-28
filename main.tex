@@ -213,6 +213,7 @@
 根据这个引理, 对于模型范畴只需要给出它的弱等价类 $\mathrm{W}$ 以及纤维化类 $I$ (或者余纤维化类 $J$)即可, 剩下的余纤维化类是 $(I \cap \mathrm{W})\mathrm{-proj}$ (或者剩下的纤维化类是 $(J \cap W)\mathrm{-inj}$.
 
 \begin{corollary}
+    \label{pushout-preserve-cofibration}
     设 $\mathcal{C}$ 是模型范畴. 则余纤维化(或者平凡余纤维化)被推出保持. 也就是说如果有推出
     \[
     \begin{tikzcd}
@@ -227,7 +228,7 @@
     \[
     \begin{tikzcd}
         A \ar[r, "i_1"] \ar[d, "f"'] & C \ar[d, "g"'] \ar[r, "i_2"] & F \ar[d, "h"] \\
-        B \ar[r, "j_1"] & D \ar[r, "j_2"] & D
+        B \ar[r, "j_1"] & D \ar[r, "j_2"] & G
     \end{tikzcd}
     \]
     于是 $f$ 对 $h$ 具有左提升性质, 也就是存在 $r \colon B \rightarrow F$ 使得 $rf = i_2 i_1, hr = j_2 j_1$. 根据推出的泛性质, 就存在 $r' \colon D \rightarrow F$ 使得 $r = r' j_1, i_2 = r' g$. 
@@ -251,6 +252,14 @@
     以及 $B \xrightarrow{H} A' \rightarrow C'$ 是 $B \rightarrow C \rightarrow C'$. 
     这样又有提升 $H' \colon C \rightarrow A'$, 它满足所需的要求. 因此 $A \rightarrow B \rightarrow C$ 对任意平凡纤维化具有左提升性质.
 \end{proof}
+
+\begin{lemma}
+    \label{KenBrown-lemma}
+    设 $\mathcal{C}$ 是模型范畴, 范畴 $\mathcal{D}$ 带有一个弱等价子范畴. 
+    设函子 $F \colon \mathcal{C} \rightarrow \mathcal{D}$ 把余纤维性对象之间的平凡余纤维化变成 $\mathcal{D}$ 中的弱等价.
+    那么 $F$ 把余纤维性对象之间的弱等价都变成 $\mathcal{D}$ 中的弱等价.
+    对偶地, 如果 $F$ 把纤维性对象之间的平凡纤维化变成 $\mathcal{D}$ 中的弱等价, 那么 $F$ 也把纤维性对象之间的弱等价都变成 $\mathcal{D}$ 中的弱等价.
+\end{lemma}
 
 \subsection{例子}
 \begin{example}
@@ -523,11 +532,11 @@ $X^I$ 同伦到所有 $X$ 的路径对象.
         \item 如果 $B$ 是余纤维性对象, 那么左同伦是 $\operatorname{Hom}_\mathcal{C}(B,X)$ 上的等价关系.
         对偶地, 如果 $X$ 是纤维性对象, 那么右同伦是 $\operatorname{Hom}_\mathcal{C}(B,X)$ 上的等价关系.
 
-        \item 如果 $B$ 是余纤维性对象, $h\colon X \rightarrow Y$ 是平凡纤维化或者纤维性对象之间的弱等价, 那么 $h$ 诱导同构
+        \item 如果 $B$ 是余纤维性对象, $h\colon X \rightarrow Y$ 是平凡纤维化或者纤维性对象之间的弱等价, 那么 $h$ 诱导双射
         \[
         \operatorname{Hom}_\mathcal{C}(B,X) / \overset{l}{\sim} \xrightarrow{\cong} \operatorname{Hom}_\mathcal{C}(B,Y) / \overset{l}{\sim}
         \]
-        对偶地, 如果 $X$ 是纤维性对象, $h \colon A \rightarrow B$ 是平凡余纤维化或者纤维性对象之间的弱等价, 那么 $h$ 诱导同构
+        对偶地, 如果 $X$ 是纤维性对象, $h \colon A \rightarrow B$ 是平凡余纤维化或者纤维性对象之间的弱等价, 那么 $h$ 诱导双射
         \[
         \operatorname{Hom}_\mathcal{C}(B,X) / \overset{r}{\sim} \xrightarrow{\cong} \operatorname{Hom}_\mathcal{C}(A,X) / \overset{r}{\sim}
         \]
@@ -568,6 +577,53 @@ $X^I$ 同伦到所有 $X$ 的路径对象.
     也就是说在 $X$ 是纤维性对象的条件下, 可以假设 $B'$ 是典型柱对象, 以及 $s \colon B' \rightarrow B$ 是平凡纤维化.
 
     现在证明 (iii). 左同伦总是自反和对称的. 现在假设 $H \colon B' \rightarrow X$ 是从 $f$ 到 $g$ 的左同伦, $H' \colon B'' \rightarrow X$ 是从 $g$ 到 $h$ 的左同伦.
+    设 $C$ 是下列推出:
+    \[
+    \begin{tikzcd}
+        B \ar[r, "i_1"] \ar[d, "i'_0"'] & B' \ar[d] \\
+        B'' \ar[r] & C
+    \end{tikzcd}
+    \]
+    设 $j_0$ 是复合 $B \xrightarrow{i_0} B' \rightarrow C$, 而 $j_1$ 是复合 $B \xrightarrow{i'_1} B'' \rightarrow C$;
+    又设 $s$ 是柱对象 $B'$ 对应的弱等价, $s'$ 是柱对象 $B''$ 对应的弱等价. 
+    那么 $s \circ i_1 = s' \circ i'_0 = \mathbbm{1}_B$, 因此可以定义 $t \colon C \rightarrow B$. 
+    容易验证 $t \circ j_0 = t \circ j_1 = \mathbbm{1}_B$, 因此 $B \sqcup B \xrightarrow{j_0 \sqcup j_1} C \xrightarrow{t} B$ 是余对角态射 $B \sqcup B \xrightarrow{\mathbbm{1} \sqcup \mathbbm{1}} B$ 的分解. 考虑下列交换图:
+    \[
+    \begin{tikzcd}
+        0 \ar[r] \ar[d] & B \ar[d] \\
+        B \ar[r] & B \sqcup B
+    \end{tikzcd}
+    \]
+    这里 $B \rightarrow B\sqcup B$ 是相应的标准态射, 那么显然这是一个推出, 于是根据 \ref{pushout-preserve-cofibration} 以及 $B$ 是余纤维性对象, $B \rightarrow B \sqcup B$ 是余纤维化.
+    这样它和余纤维化 $B \sqcup B \rightarrow B'$ 的复合 $i_1 \colon B \rightarrow B'$ 就是余纤维化. 而 $s \circ i_1 = \mathbbm{1}$ 是弱等价, 因此 $i_1$ 是弱等价, 或者说平凡余纤维化.
+    这样还是根据 \ref{pushout-preserve-cofibration}, $B'' \rightarrow C$ 也是平凡余纤维化, 它和 $t$ 的复合 $s'$ 是弱等价, 因此 $t$ 是弱等价.
+
+    由于 $H \circ i_1 = g = H' \circ i'_0$, 因此从推出泛性质可得态射 $K \colon C \rightarrow X$. 容易验证 $K j_0 = f$ 以及 $K j_1 = h$.
+    $K$ 还不是左同伦, 但是我们可以把 $j_0 \sqcup j_1$ 分解为余纤维化和平凡纤维化的复合 $B \sqcup B \xrightarrow{j} C' \xrightarrow{t'} C$.
+    于是 $t \circ t'$ 是弱等价, 这样 $C'$ 就是 $B$ 的一个柱对象, 而 $Kt'$ 就是一个从 $f$ 到 $h$ 的左同伦.
+
+    对于 (iv), 设 $h \colon X \rightarrow Y$ 是平凡纤维化. 则根据 (i) 和 (iii), 自然良定义了映射
+    \[
+    F \colon \operatorname{Hom}_\mathcal{C}(B,X)/ \overset{l}{\sim} \longrightarrow \operatorname{Hom}_\mathcal{C}(B,Y)/ \overset{l}{\sim}
+    \]
+    我们需要证明它是双射. 首先假设有态射 $f' \colon B \rightarrow Y$. 因为 $B$ 是余纤维性对象, 从交换图
+    \[
+    \begin{tikzcd}
+        0 \ar[r] \ar[d] & X \ar[d, "h"] \\
+        B \ar[r, "f'"] & Y
+    \end{tikzcd}
+    \]
+    可以得到态射 $f \colon B \rightarrow X$ 使得 $hf = f'$. 因此 $F$ 是满射, 并且不需要考虑同伦等价.
+    现在假设有 $hf \overset{l}{\sim} hg$, 以及从 $hf$ 到 $hg$ 的左同伦 $H \colon B' \rightarrow Y$, 这里 $B \sqcup B \xrightarrow{i = i_0 \sqcup i_1} B' \rightarrow B$.
+    那么从下列交换图
+    \[
+    \begin{tikzcd}
+        B \sqcup B \ar[r, "f \sqcup g"] \ar[d, "i"'] & X \ar[d, "h"'] \\
+        B' \ar[r, "H"] & Y
+    \end{tikzcd}
+    \]
+    可以得到提升 $K \colon B' \rightarrow X$. 同时 $K i_0 = K i \circ I_1 = (f \sqcup g) \circ I_1 = f$, 这里 $I_1 \colon B \rightarrow B \sqcup B$ 是第一个因子的标准插入态射,
+    类似地 $K i_1 = g$, 因此 $K$ 是从 $f$ 到 $g$ 的左同伦. $F$ 是单射.
 \end{proof}
 
 
