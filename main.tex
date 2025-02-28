@@ -1,0 +1,575 @@
+\documentclass[lang=cn, scheme=chinese, thmcnt=section, usesamecnt]{elegantbook}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{tikz-cd}
+\usepackage{bbm}
+%\usepackage[colorlinks=true, linkcolor=blue, citecolor=red, urlcolor=cyan]{hyperref}
+
+\title{模型范畴与无穷范畴}
+\author{Aki Sakuchan}
+\cover{sa60j-foyi1.png}
+
+\addbibresource[location=local]{reference.bib}
+\setcounter{tocdepth}{2}
+
+\begin{document}
+\maketitle
+
+\frontmatter
+
+\tableofcontents
+
+\mainmatter
+
+\chapter{模型范畴的定义和基本结论}
+本节主要介绍模型范畴公理和从公理得出的结论，主要内容来自\cite{hovey2007model}.
+
+\section{定义和例子}
+
+\subsection{模型范畴公理}
+设 $\mathcal{C}$ 是一个范畴，那么它的全体态射 $\operatorname{Map} \mathcal{C}$ 可以视为一个范畴，
+对象就是 $\mathcal{C}$ 中的对象, 从 $f \colon A \rightarrow B$ 到 $g \colon C \rightarrow D$ 的态射是二元组 $(\alpha, \beta)$,
+这里 $\alpha \colon A \rightarrow C, ~ \beta \colon B \rightarrow D$ 是态射, 并且和 $f,g$ 交换.
+现在引入范畴论中的两个概念:
+
+\begin{definition}
+    在一个范畴中, 对象 $A$ 称为对象 $B$ 的{\bf 缩回(retract)}指的是存在态射 $i \colon A \rightarrow B$ 和 $r \colon B \rightarrow A$
+    使得 $r \circ i = \mathbbm{1}_A$. 在这里 $r$ 称为从 $B$ 到 $A$ 的{\bf 缩回映射(retraction)}, $i$ 称为{\bf 截面映射(section)}.
+    这两个概念实际上是代数拓扑里面丛的同名概念的推广。
+
+    特别地, $\operatorname{Map} \mathcal{C}$ 中 $f$ 的缩回是 $\mathcal{C}$ 中的态射 $g$ 使得下图交换:
+
+    \[
+    \begin{tikzcd}
+    A \ar[r] \ar[d, "f"'] & C \ar[r] \ar[d, "g"'] & A \ar[d, "f"] \\
+    B \ar[r] & D \ar[r] & B
+    \end{tikzcd}
+    \]
+    
+    这里水平方向的两个复合都是 $\mathbbm{1}_A$.
+\end{definition}
+
+\begin{definition}{分解函子}
+    $\operatorname{Map} \mathcal{C}$ 的分解函子是两个函子 $\alpha, \beta \colon\operatorname{Map} \mathcal{C} \rightarrow \operatorname{Map} \mathcal{C}$ 
+    组成的二元组 $(\alpha, \beta)$ 并且使得对任意 $f \in \operatorname{Map}\mathcal{C}$ 都有 $f = \beta(f) \circ \alpha(f)$
+\end{definition}
+
+
+再引入代数拓扑中同伦提升性质和同伦扩展性质的一般化定义:
+\begin{definition}
+\label{LLP-RLP}
+    设 $i \colon A \rightarrow B$ 和 $p \colon X \rightarrow Y$ 是 $\mathcal{C}$ 的两个态射. 如果对任意如下交换图
+
+    \begin{equation}
+    \label{diagram-LLP-RLP}
+    \begin{tikzcd}
+        A \ar[r, "f"] \ar[d, "i"'] & X \ar[d, "p"] \\
+        B \ar[r, "g"'] & Y
+    \end{tikzcd}
+    \end{equation}
+    都有 $h \colon B \rightarrow Y$ 使得 $hi = f$ 以及 $ph = g$, 那么我们说 $i$ 对 $p$ 具有{\bf 左提升性质(Left lifting property, LLP)},
+    并且 $p$ 对 $i$ 具有{\bf 右提升性质(Right lifting property, RLP)}.
+
+    设 $I$ 是 $\mathcal{C}$ 中一类态射, 则
+    \begin{enumerate}
+        \item $I$-单射指的是对 $I$ 中每个态射都具有 RLP 的态射, $I$-单射类记作 $I\mathrm{-inj}$.
+        \item $I$-投射指的是对 $I$ 中每个态射都具有 LLP 的态射, $I$-投射类记作 $I\mathrm{-proj}$.
+        \item $I$-余纤维化指的是对每个 $I$-单射具有 LLP 的态射, $I$-余纤维化类就是 $(I\mathrm{-inj})\mathrm{-proj}$, 记作 $I\mathrm{-cof}$.
+        \item $I$-纤维化指的是对每个 $I$-投射具有 RLP 的态射, $I$-纤维化类就是 $(I\mathrm{-proj})\mathrm{-inj}$, 记作 $I\mathrm{-fib}$.
+    \end{enumerate}
+\end{definition}
+
+\begin{example}
+\label{HLP-HEP}
+    我们回忆代数拓扑中, 映射 $p \colon E \rightarrow B$ 对空间 $X$ 具有{\bf 同伦提升性质(Homotopy lifting property, HLP)}指的是对任意同伦
+    $h \colon X \times I \rightarrow B$ 和任意映射 $a \colon X \rightarrow E$, 并且 $pa = h_0$, 那么就存在同伦 $H \colon X \times I \rightarrow E$
+    使得 $pH = h$ 以及 $H_0 = a$. 我们说 $H$ 是 $h$ 在初始条件 $a$ 下的{\bf 提升(lifting)}. 这个定义用\ref{LLP-RLP}的语言重新组织如下\cite{dieck2008algebraic}:
+    \[
+    \begin{tikzcd}
+        X \ar[r, "a"] \ar[d, "i_0"'] & E \ar[d, "p"] \\
+        X \times I \ar[r, "h"'] \ar[ur, dashrightarrow, "H"'] & B
+    \end{tikzcd}
+    \]
+    这里 $i_0(x) = (x,0)$. 也就是说 $p$ 对 $i_0$ 具有右提升性质.
+    如果 $p$ 对所有空间都具有 HLP, 那么我们说 $p$ 是 {\bf Hurewicz 纤维化};
+    如果 $p$ 对所有单位立方体 $I^n,~ n \in \mathbb{N}$ 具有 HLP, 那么我们说 $p$ 是 {\bf Serre 纤维化}.
+
+
+    对偶地, 映射 $i \colon A \rightarrow X$ 对空间 $Y$ 具有{\bf 同伦扩展性质(Homotopy extension property, HEP)}指的是对任意同伦
+    $h \colon A \times I \rightarrow Y$ 和任意映射 $f \colon X \rightarrow Y$, 并且 $fi = h_0$, 那么就存在同伦 $H \colon X \times I \rightarrow Y$ 
+    使得 $Hi = h$ 以及 $H_0 = f$. 我们说 $H$ 是 $h$ 在初始条件 $f$ 下的{\bf 扩展(extension)}. 同样地, 这个定义可以用\ref{LLP-RLP}的语言重新组织:
+    \[
+    \begin{tikzcd}
+        A \ar[d, "i"'] \ar[r, "h"] & Y^I \ar[d, "e_0"] \\
+        X \ar[r, "f"'] \ar[ur, dashrightarrow, "H"'] & Y
+    \end{tikzcd}
+    \]
+    这里 $Y^I$ 取{\bf 紧开拓扑}\cite[X.26 Def.1, X.28 Th.3]{Bourbaki2007} , $e_0(w) = w(0)$. 也就是说 $i$ 对 $e_0$ 具有左提升性质.
+    如果 $i$ 对所有空间都具有 HEP, 那么我们说 $i$ 是 {\bf Hurewicz 余纤维化};
+\end{example}
+
+
+现在我们可以叙述模型范畴结构了:
+\begin{definition}
+    范畴 $\mathcal{C}$ 上的{\bf 模型结构(Model structure)}由三类态射 $\mathrm{W}, \mathrm{Fib}, \mathrm{Cof} \subset \operatorname{Map} \mathcal{C}$ 
+    和两组分解函子 $(\alpha, \beta), ~ (\gamma, \delta)$ 组成, $\mathrm{W}, \mathrm{Fib}, \mathrm{Cof}$ 中的态射分别称为{\bf 弱等价, 纤维化, 余纤维化},
+    同时是弱等价和纤维化的态射称为{\bf 平凡纤维化}, 类似地同时是弱等价和余纤维化的态射称为{\bf 平凡余纤维化},
+    他们需要满足下列条件:
+    \begin{enumerate}
+        \item {\bf 三选二}: 设 $f,g$ 是 $\mathcal{C}$ 的两个态射, 且使得 $gf$ 有定义. 则如果 $f,g$ 和 $gf$ 三者中有两个是弱等价, 那么剩下一个必须也要是弱等价.
+        \item {\bf 缩回}: 设 $f,g$ 是两个态射, 并且 $f$ 是 $g$ 的缩回, 那么当 $g$ 是弱等价或者纤维化或者余纤维化的时候, $f$ 也是同样类型的态射.
+        \item {\bf 提升}: 平凡余纤维化对纤维化具有左提升性质, 平凡纤维化对余纤维化具有右提升性质.
+        \item {\bf 分解}: 对任意态射 $f$, 有 $\alpha(f)$ 是余纤维化, $\beta(f)$ 是平凡纤维化; 以及 $\gamma(f)$ 是平凡余纤维化, $\delta(f)$ 是纤维化.
+    \end{enumerate}
+
+    {\bf 模型范畴}指的是具有模型结构和拥有所有的小极限和小上极限的范畴.
+\end{definition}
+这个定义实际上在模型范畴的原始文献 \cite{Qui22} 里面是闭模型范畴, 但是许多作者只考虑闭模型范畴.
+
+\begin{remark}
+    模型范畴 $\mathcal{C}$ 具有始对象 $0$, 是空图的上极限; 也具有终对象 $1$, 是空图的极限.
+    我们称一个对象是{\bf 纤维性的}, 指的是从它到 $1$ 的态射是纤维化; 类似地, 一个对象是{\bf 余纤维性的}指的是从 $0$ 到它的态射是余纤维化.
+    如果一个对象既是纤维性的又是余纤维性的, 我们说它是{\bf 双纤维性的}.
+
+    设 $X,Y$ 是两个对象, 并且有态射 $g \colon X \rightarrow Y$, 那么我们有 $\operatorname{Map} \mathcal{C}$ 中的对象和态射:
+    \[
+    \begin{tikzcd}
+        0 \ar[r, equal] \ar[d, "f"'] & 0 \ar[d, "h"] \\
+        X \ar[r, "g"'] & Y
+    \end{tikzcd}
+    \]
+    于是 $(\alpha, \beta)$ 作用上去得到:
+    \[
+    \begin{tikzcd}
+        0 \ar[r, equal] \ar[d, "\alpha(f)"'] & 0 \ar[d, "\alpha(h)"] \\
+        QX \ar[r, "\alpha(g)"'] \ar[d, "\beta(f)"'] & QY \ar[d, "\beta(h)"] \\
+        X \ar[r, "g"'] & Y
+    \end{tikzcd}
+    \]
+    这样我们得到一个函子 $X \mapsto QX$, 并且 $QX$ 是余纤维性对象;
+    以及从 $Q$ 到 $\mathbbm{1}_\mathcal{C}$ 的自然变换 $QX \xrightarrow{q_X} X$,
+    并且它由平凡纤维化组成. 我们称 $Q$ 为 $\mathcal{C}$ 的{\bf 余纤维性替换函子(Cofibrant replacement functor)}.
+
+    类似地, 把 $(\gamma, \delta)$ 作用在 $X \rightarrow 1$ 上可以得到{\bf 纤维性替换函子(Fibrant replacement functor)} $RX$ 和由平凡余纤维化组成的自然变换 $X \rightarrow RX$.
+\end{remark}
+
+
+\begin{property}
+    模型范畴公理是自对偶的. 也就是说如果 $\mathcal{C}$ 是模型范畴, 那么它的对偶范畴 $\mathcal{C}^\mathrm{op}$ 也是模型范畴.
+    $\mathcal{C}^\mathrm{op}$ 的余纤维化就是 $\mathcal{C}$ 的纤维化, $\mathcal{C}^\mathrm{op}$ 的纤维化就是 $\mathcal{C}$ 的余纤维化,
+    $\mathcal{C}^\mathrm{op}$ 的弱等价就是 $\mathcal{C}$ 的弱等价. 分解函子也反向: $\alpha$ 变成 $\delta$, $\beta$ 变成 $\gamma$; $\gamma$ 变成 $\beta$, $\delta$ 变成 $\alpha$.
+    这种模型范畴我们记作 $D\mathcal{C}$, 于是 $D^2 \mathcal{C} = \mathcal{C}$.
+    这个对偶性质意味着所有关于模型范畴的定理都有其对偶版本.
+\end{property}
+
+下面是一些有用的引理:
+
+\begin{lemma}[缩回判据]
+\label{lemma.1.1.9}
+    若范畴 $\mathcal{C}$ 中有分解 $f = pi$, 并且 $f$ 对 $p$ 具有左提升性质, 那么 $f$ 是 $i$ 的缩回.
+    对偶地, 如果 $f$ 对 $i$ 具有右提升性质, 那么 $f$ 是 $p$ 的缩回.
+\end{lemma}
+\begin{proof}
+    设 $f$ 对 $i$ 具有左提升性质. 记 $f \colon A \rightarrow C$ 和 $i \colon A \rightarrow B$. 则有下面交换图:
+    \[
+    \begin{tikzcd}
+        A \ar[r, "i"] \ar[d, "f"'] & B \ar[d, "p"] \\
+        C \ar[r, equal] \ar[ur, "r"'] & C
+    \end{tikzcd}
+    \]
+    于是有交换图:
+    \[
+    \begin{tikzcd}
+        A \ar[r, equal] \ar[d, "f"'] & A \ar[r, equal] \ar[d, "i"'] & A \ar[d, "f"] \\
+        C \ar[r, "r"'] & B \ar[r, "p"'] & C
+    \end{tikzcd}
+    \]
+    这样就证明了 $f$ 是 $i$ 的缩回. 对于 $f$ 对 $i$ 具有右提升性质这种情况, 类似地只要考虑下面两个交换图即可:
+    \[
+    \begin{tikzcd}
+        A \ar[r, equal] \ar[d, "i"'] & A \ar[d, "f"] \\
+        B \ar[r, "p"'] \ar[ur, "r"'] & C
+    \end{tikzcd}
+    \qquad
+    \begin{tikzcd}
+        A \ar[r, "i"] \ar[d, "f"'] & B \ar[r, "r"] \ar[d, "p"] & A \ar[d, "f"] \\
+        C \ar[r, equal] & C \ar[r, equal] & C
+    \end{tikzcd}
+    \]
+\end{proof}
+
+\begin{lemma}
+\label{lemma.1.1.10}
+    设 $\mathcal{C}$ 是模型范畴. 那么一个态射是余纤维化(或者平凡余纤维化), 当且仅当它对所有平凡纤维化(或者所有纤维化)具有左提升性质.
+    对偶地, 一个态射是纤维化(或者平凡纤维化), 当且仅当它对所有平凡余纤维化(或者所有余纤维化)具有右提升性质.
+\end{lemma}
+\begin{proof}
+    必要条件直接从模型结构的提升公理得到. 反过来, 设 $f$ 对所有平凡纤维化具有左提升性质. 根据分解性质, $f = pi$, 这里 $i$ 是余纤维化而 $p$ 是平凡纤维化.
+    根据假设 $f$ 对 $p$ 具有右提升性质, 那么根据缩回判据, $f$ 是 $i$ 的缩回, 再根据模型结构的缩回性质得到 $f$ 也是余纤维化.
+    类似地可以证明其他情况以及对偶版本.
+\end{proof}
+
+根据这个引理, 对于模型范畴只需要给出它的弱等价类 $\mathrm{W}$ 以及纤维化类 $I$ (或者余纤维化类 $J$)即可, 剩下的余纤维化类是 $(I \cap \mathrm{W})\mathrm{-proj}$ (或者剩下的纤维化类是 $(J \cap W)\mathrm{-inj}$.
+
+\begin{corollary}
+    设 $\mathcal{C}$ 是模型范畴. 则余纤维化(或者平凡余纤维化)被推出保持. 也就是说如果有推出
+    \[
+    \begin{tikzcd}
+        A \ar[r] \ar[d, "f"'] & C \ar[d, "g"'] \\
+        B \ar[r] & D
+    \end{tikzcd}
+    \]
+    并且 $f$ 是余纤维化(或者平凡余纤维化), 那么 $g$ 也是余纤维化(或者平凡余纤维化). 对偶地, 纤维化(或者平凡纤维化)被拉回保持.
+\end{corollary}
+\begin{proof}
+    设 $h \colon F \rightarrow G$ 是任意平凡纤维化, 考虑交换图
+    \[
+    \begin{tikzcd}
+        A \ar[r, "i_1"] \ar[d, "f"'] & C \ar[d, "g"'] \ar[r, "i_2"] & F \ar[d, "h"] \\
+        B \ar[r, "j_1"] & D \ar[r, "j_2"] & D
+    \end{tikzcd}
+    \]
+    于是 $f$ 对 $h$ 具有左提升性质, 也就是存在 $r \colon B \rightarrow F$ 使得 $rf = i_2 i_1, hr = j_2 j_1$. 根据推出的泛性质, 就存在 $r' \colon D \rightarrow F$ 使得 $r = r' j_1, i_2 = r' g$. 
+    而注意到 $hr'j_1 = hr = j_2j_1, hr'g = hi_2 = j_2g$, 于是根据泛性质的唯一性就得到 $hr' = j_2$. 因此 $g$ 也对 $h$ 具有左提升性质, 根据 \ref{lemma.1.1.10} 可以得到 $g$ 也是余纤维化.
+    其他情况的证明类似.
+\end{proof}
+
+\begin{corollary}
+    余纤维化的复合也是余纤维化. 对偶地, 纤维化的复合还是纤维化.
+\end{corollary}
+\begin{proof}
+    设有余纤维化 $A \rightarrow B$ 和 $B \rightarrow C$. 对任意平凡纤维化 $A' \rightarrow C'$ 和交换图:
+    \[
+    \begin{tikzcd}
+        A \ar[r] \ar[d] & A' \ar[dd] \\
+        B \ar[d] & \\
+        C \ar[r] & C'
+    \end{tikzcd}
+    \]
+    因为 $A \rightarrow B$ 是余纤维化, 存在提升 $H \colon B \rightarrow A'$ 使得 $A \rightarrow B \xrightarrow{H} A'$ 是 $A \rightarrow A'$,
+    以及 $B \xrightarrow{H} A' \rightarrow C'$ 是 $B \rightarrow C \rightarrow C'$. 
+    这样又有提升 $H' \colon C \rightarrow A'$, 它满足所需的要求. 因此 $A \rightarrow B \rightarrow C$ 对任意平凡纤维化具有左提升性质.
+\end{proof}
+
+\subsection{例子}
+\begin{example}
+    设 $\mathcal{C}$ 是具有所有小极限和小上极限的范畴. 那么它有三个平凡的模型结构: 选择弱等价, 纤维化, 余纤维化三者之一为同构, 另外两个选为全体态射.
+
+    比如选择 $\mathrm{W}$ 是全体同构, $\mathrm{Fib}, \mathrm{Cof}$ 是全体态射. 那么三选二性质显然满足. 设 $g$ 是同构, 并有交换图:
+    \[
+    \begin{tikzcd}
+        \bullet \ar[r, "i_1"] \ar[d, "f"'] & \bullet \ar[r, "r_1"] \ar[d, "g"'] & \bullet \ar[d, "f"] \\
+        \bullet \ar[r, "i_2"] & \bullet \ar[r, "r_2"] & \bullet
+    \end{tikzcd}
+    \]
+    那么不难验证 $r_1 \circ g^{-1} \circ i_2$ 是 $f$ 的逆, 因此 $f$ 也是同构. 另外两个类别的缩回性质显然也满足.
+    设有交换图 (\ref{diagram-LLP-RLP}), 当 $i$ 是同构时, 取 $h = f \circ i^{-1}$, 那么就有 $hi = f, ~ ph = g$, 即平凡余纤维化对纤维化具有左提升性质;
+    类似地, 如果 $p$ 是同构, 取 $h = p^{-1} \circ g$, 那么就有 $ph = g, ~ hi = f$, 即平凡纤维化对余纤维化具有右提升性质.
+    至于分解函子 $(\alpha, \beta)$, 只需要定义 $\alpha(f) = f,~ \beta(f) = \mathbbm{1}_{\operatorname{cod}{f}}$; 对于 $(\gamma, \delta)$ 也是类似的.
+    这样就在 $\mathcal{C}$ 上定义了一个模型结构.
+\end{example}
+
+\begin{example}
+    设 $\mathcal{C},~ \mathcal{D}$ 是模型范畴. 则 $\mathcal{C} \times \mathcal{D}$ 也是模型范畴: 态射 $(f,g)$ 是弱等价 (纤维化, 余纤维化) 当且仅当 $f,g$ 二者都是弱等价
+    (纤维化, 余纤维化). 我们把这种模型范畴称为乘积模型范畴.
+\end{example}
+
+一般来说, 证明一个范畴具有模型结构是很复杂的. 下面我们先给出几个模型范畴的例子. 
+这些例子都是余纤维生成的, 因此只需要给出弱等价和纤维化(或者余纤维化)即可, 下一章会详细讨论它们如何构造出模型结构剩下的部件.
+
+\begin{example}
+    设 $R$ 是交换环, $\operatorname{Ch}(R)$ 是 $R$-模范畴上的链复形范畴. 链映射 $f$ 如果在链同调上诱导的每个映射 $H^n(f)$ 都是同构, 则 $f$ 称为{\bf 拟同构(quasi-isomorphism)}.
+    我们取弱等价为拟同构. 链映射 $f \colon X \rightarrow Y$ 如果每个 $f_n \colon X_n \rightarrow Y_n$ 都是满射, 那么我们取纤维化为这类链映射.
+    这样构造出来的模型结构称为 $\operatorname{Ch}(R)$ 上的{\bf 投射模型结构}.
+\end{example}
+
+由于链复形范畴的终对象也是 $0$ 复形, 自然所有的链复形都是纤维性的. 至于余纤维性对象(实际上是双纤维性对象), 由下面定理给出:
+
+\begin{lemma*}
+    $A$ 是余纤维对象, 则每个 $A_n$ 都是投射模. 反过来, 由投射模构成的下有界链复形是余纤维性对象.
+\end{lemma*}
+
+对于 $R$-模 $X$, 考虑链复形 $S_\bullet(X)$, 它只有 $S_0(X) = X$, 其余项都是 $0$. 对其做余纤维性替换, 得到:
+\[
+0 \longrightarrow P_\bullet \overset{f}{\longrightarrow} S_\bullet(X)
+\]
+这里 $P_\bullet$ 是余纤维性对象, 因此其成员都是投射模. 
+$f$ 是拟同构, 而 $H^i(S_\bullet(X)) = 0, i \geq 1$, 因此有 $H^i( P_\bullet) = 0, i \geq 1$, 这意味着 $P_\bullet$ 在下标大于 $0$ 处都是正合的.
+$f$ 还是纤维化, 特别地 $f_0 \colon P_0 \rightarrow S_0(X) = X$ 是满射, 这样 $P_\bullet \rightarrow X \rightarrow 0$ 在 $X$ 处正合.
+最后若有 $x \in P_0$ 使得 $f_0(x) = 0$, 那么 $H_0(f)(\bar{x}) = 0$, 而 $H_0(f)$ 是同构, 因此 $\bar{x}=0$, 换句话说 $P_\bullet \rightarrow X \rightarrow 0$ 在 $P_0$ 处正合.
+这样看来, $X$ 的投射消解实际上是 $\operatorname{Ch}(R)$ 的投射模型结构中的余纤维性替换.
+
+链复形范畴上还有另一种模型结构:
+\begin{example}
+    取弱等价为拟同构. 链映射 $f \colon X \rightarrow Y$ 如果每个 $f_n \colon X_n \rightarrow Y_n$ 都是单射, 那么我们取余纤维化为这类链映射.
+    这样构造出来的模型结构称为{\bf 单射模型结构}. 为了和习惯统一, 讨论单射模型结构时, 链复形范畴指的是上链复形范畴.
+\end{example}
+类似地, 在这个模型范畴中所有上链复形都是余纤维性对象. 而由单射模构成的下有界上链复形是纤维性对象(双纤维性对象). 单射消解实际上是纤维性替换.
+
+
+\begin{example}[ Quillen 模型结构]
+    设有两个拓扑空间 $X,Y$ 和连续映射 $f \colon X \rightarrow Y$. 那么用 $\pi_0(X)$ 和 $\pi_0(Y)$ 表示各自的道路连通分支, $f$ 可以诱导一个映射
+    \[
+    f_* \colon \pi_0(X) \longrightarrow \pi_0(Y)
+    \]
+    同时对每个 $x \in X,~ n \geq 1$, $f$ 还可以诱导各阶同伦群之间的同态:
+    \[
+    f_* \colon \pi_n(X, x) \longrightarrow \pi_n(Y, f(x))
+    \]
+    如果这些 $f_*$ 都是双射, 那么我们说 $f$ 是从 $X$ 到 $Y$ 的弱同伦等价. 现在可以在拓扑空间范畴 $\mathbf{Top}$ 中定义 {\bf Quillen 模型结构}, 也叫{\bf 经典模型结构}:
+    \begin{itemize}
+        \item 弱等价是弱同伦等价构成的类
+        \item 纤维化是 Serre 纤维化构成的类.
+    \end{itemize}
+    在这个模型范畴中, 所有拓扑空间都是纤维性的; 所有 CW 复形都是余纤维性的.
+\end{example}
+
+拓扑空间范畴还有另一个模型结构:
+\begin{example}[ Hurewicz 模型结构]
+    \begin{itemize}
+        \item 弱等价是通常的同伦等价构成的类
+        \item 纤维化取 Hurewicz 纤维化
+        \item 余纤维化取 Hurewicz 余纤维化
+    \end{itemize}
+\end{example}
+
+\section{同伦范畴}
+模型范畴中, 弱等价不是真正的对象同构, 但是我们可以给范畴添加弱等价的逆箭头使得弱等价称为真正的同构. 
+这个过程称为{\bf 局部化(Localization)}, 就类似交换代数中给环添加它一个子集中元素的逆而得到新的环一样.
+
+\subsection{局部化}
+\begin{definition}
+    设 $\mathcal{C}$ 是范畴, $\mathrm{W}$ 是一类态射, 称为弱等价, 也就是它满足三选二性质. 我们定义局部化``范畴'' $\mathcal{C}[\mathrm{W}^{-1}]$ 如下:
+    $F(\mathcal{C}, \mathrm{W}^{-1})$ 是一个``范畴'', 它的对象是 $\mathcal{C}$ 的对象; 对于 $A,B \in \operatorname{Obj}\mathcal{C}$, 
+    从 $A$ 到 $B$ 的态射由包括空串的有限长字符串 $(f_1, f_2, \dots, f_n)$ 组成, 这里 $f_i$ 要么是 $\mathcal{C}$ 中的态射, 要么是某个符号 $w^{-1},~ w \in \mathrm{W}$,
+    并且这些 $f_i$ 要首尾相接, 也就是 $\operatorname{dom} f_0 = A,~ \operatorname{cod} f_i = \operatorname{dom} f_{i+1},~ \operatorname{cod} f_n = B$,
+    这里我们规定 $\operatorname{dom} w^{-1} = \operatorname{cod} w,~ \operatorname{cod} w^{-1} = \operatorname{dom} w$;
+    $F(\mathcal{C}, \mathrm{W}^{-1})$ 中态射的复合就是字符串的连接.
+    现在定义 $\mathcal{C}[\mathrm{W}^{-1}]$ 为 $F(\mathcal{C}, \mathrm{W}^{-1})$ 的商``范畴'', 通过对态射类模去等价关系 $\sim$:
+    \begin{itemize}
+        \item 对任意对象 $A$, $A$ 到其自身的空串和单位态射组成的字符串 $(\mathbbm{1}_A)$ 等价
+        \item 对于可复合的态射 $f,g$, $(f,g)$ 和 $(g \circ f)$ 等价
+        \item 对任意 $w \in \mathrm{W}$, $(\mathbbm{1}_{\operatorname{dom} w})$ 和 $(w, w^{-1})$ 等价, $(\mathbbm{1}_{\operatorname{cod} w})$ 和 $(w^{-1},w)$ 等价.
+    \end{itemize}
+
+    定义标准函子 $\gamma \colon \mathcal{C} \rightarrow \mathcal{C}[\mathrm{W}^{-1}]$ 如下:
+    它把 $A \in \operatorname{Obj} \mathcal{C}$ 映射为 $A$, 把 $\mathcal{C}$ 中的态射 $f$ 映射为等价类 $(f)/\sim$.
+\end{definition}
+如此构造的局部化可能导致集合论困难, 因为添加的逆箭头可能使得 $F(\mathcal{C}, \mathrm{W}^{-1})$, 
+进而使得 $\mathcal{C}[\mathrm{W}^{-1}]$ 的两个对象之间的态射``太多''而不能形成集合. 
+如果我们讨论的范畴限于局部小范畴的话, 这两个范畴实际上不是范畴, 这就是为何上面定义中的范畴都加了引号.
+为此我们暂时扩大论域, 认为这种范畴对象间态射集合是一种更大的, 和之前的对象间态射集合不是同一种的集合, 把后者称为小集合.
+随后我们将证明, 对于模型范畴的局部化, 并不存在集合论困难, 局部化范畴的对象之间的态射集合, 确实是小集合.
+
+不难验证 $(\mathcal{C}^\mathrm{op})[(\mathrm{W}^\mathrm{op})^{-1}] = \left( \mathcal{C}[\mathrm{W}^{-1}] \right)^\mathrm{op}$ 以及
+$(\mathcal{C} \times \mathcal{C}')[(\mathrm{W} \times \mathrm{W}')^{-1}]$ 同构于 $\mathcal{C}[\mathrm{W}^{-1}] \times \mathcal{C}'[\mathrm{W'}^{-1}]$.
+
+对于局部化, 还有下列泛性质:
+\begin{lemma}
+\label{lemma.1.2.2}
+    设 $\mathcal{C}$ 是范畴, $\mathrm{W}$ 是弱等价类. 那么有:
+    \begin{enumerate}[(i)]
+        \item 如果函子 $F \colon \mathcal{C} \rightarrow \mathcal{D}$ 把 $\mathrm{W}$ 中的态射映射为 $\mathcal{D}$ 中的同构, 
+        那么存在唯一的函子 $F[\mathrm{W}^{-1}] \colon \mathcal{C}[\mathrm{W}^{-1}] \rightarrow \mathcal{D}$ 使得 $F = F[\mathrm{W}^{-1}] \circ \gamma$.
+
+        \item 如果范畴 $\mathcal{E}$ 和函子 $\delta$ 也满足上述泛性质, 那么存在唯一范畴间同构 $F \colon \mathcal{C}[\mathrm{W}^{-1}] \rightarrow \mathcal{E}$ 
+        使得 $\delta = F \circ \gamma$.
+
+        \item 上面的泛性质提供了一个函子范畴间的同构:
+        \[
+        \begin{aligned}
+            \operatorname{Fun}(\mathcal{C}[\mathrm{W}^{-1}], \mathcal{D}) &\longrightarrow 
+            \{ F \in \operatorname{Fun}(\mathcal{C}, \mathcal{D}) \mid F \text{ 把 } \mathrm{W} \text{ 中的态射映射为 } \mathcal{D} \text{ 中的同构} \} \\
+            G &\longmapsto G \circ \gamma \\
+        \end{aligned}
+        \]
+    \end{enumerate}
+\end{lemma}
+\begin{proof}
+    只需要定义 $F[\mathrm{W}^{-1}]$ 把 $A \in \operatorname{Obj}\mathcal{C}[\mathrm{W}^{-1}] = \operatorname{Obj} \mathcal{C}$ 变为 $F(A)$,
+    把空串变为单位态射, 把 $(f_1,\dots,f_n)/\sim$ 变为 $F(f_n) \circ \cdots \circ F(f_1)$ 即可, 这里如果 $f_i = w^{-1}, w \in W$, 那么 $F(f_i)$ 表示 $(F(w))^{-1}$.
+    这样就证明了 (i), 而 (ii) 是显然的.
+
+    (iii) 也几乎是显然的: 反过来的函子只需要取 $F \mapsto F[\mathrm{W}^{-1}]$ 即可.
+    设有两个函子 $F,G \colon \mathcal{C} \rightarrow \mathcal{D}$, 它们都把 $\mathrm{W}$ 中的态射映射为 $\mathcal{D}$ 中的同构, 
+    还有一个自然变换 $\tau \colon F \rightarrow G$. 则对于 $X,Y \in \operatorname{Obj} \mathcal{C}[\mathrm{W}^{-1}] = \operatorname{Obj} \mathcal{C}$ 和态射
+    $f = (f_1, \dots, f_n)/\sim$. 考虑图表:
+    \[
+    \begin{tikzcd}[column sep = 4.5cm, row sep = 1.3cm]
+        F[\mathrm{W}^{-1}](X) \ar[r, "{F[\mathrm{W}^{-1}](f) = F(f_1) \cdots F(f_n)}"] \ar[d, "\tau_X"'] & F[\mathrm{W}^{-1}](Y) \ar[d, "\tau_Y"] \\
+        G[\mathrm{W}^{-1}](X) \ar[r, "{G[\mathrm{W}^{-1}](f) = G(f_1) \cdots G(f_n)}"'] & G[\mathrm{W}^{-1}](Y)
+    \end{tikzcd}
+    \]
+    它自然是交换的, 因为 $F,G$ 都把 $\mathrm{W}$ 中的态射变为同构, 上图本质上就是一系列 $\tau \colon F \rightarrow G$ 的交换图复合出来的.
+    反过来的构造类似的.
+\end{proof}
+
+\begin{proposition}
+    设有模型范畴 $\mathcal{C}$, 它的由纤维性, 余纤维性和双纤维性对象组成的全子范畴分别记为 $\mathcal{C}_\mathrm{f},~ \mathcal{C}_\mathrm{c},~ \mathcal{C}_\mathrm{cf}$.
+    那么包含函子可以诱导范畴等价 $\mathcal{C}_\mathrm{cf}[\mathrm{W}^{-1}] \rightarrow \mathcal{C}_\mathrm{f}[\mathrm{W}^{-1}] \rightarrow \mathcal{C}[\mathrm{W}^{-1}]$
+    和范畴等价 $\mathcal{C}_\mathrm{cf}[\mathrm{W}^{-1}] \rightarrow \mathcal{C}_\mathrm{c}[\mathrm{W}^{-1}] \rightarrow \mathcal{C}[\mathrm{W}^{-1}]$.
+\end{proposition}
+\begin{proof}
+    插入函子 $i \colon \mathcal{C}_\mathrm{f} \rightarrow \mathcal{C}$ 保持弱等价, 因此可以诱导局部化范畴之间的态射
+    $i[\mathrm{W}^{-1}] \colon \mathcal{C}_\mathrm{f}[\mathrm{W}^{-1}] \rightarrow \mathcal{C}[\mathrm{W}^{-1}]$.
+    在考虑纤维性替换函子 $R \colon \mathcal{C} \rightarrow \mathcal{C}$ 和由平凡余纤维化组成的自然变换 $q \colon \mathbbm{1}_\mathcal{C} \rightarrow R$.
+    特别地, 若有 $\mathcal{C}$ 中的弱等价 $f \colon X \rightarrow Y$, 则有交换图:
+    \[
+    \begin{tikzcd}
+        X \ar[r, "f"] \ar[d, "q_X"'] & Y \ar[d, "q_Y"] \\
+        RX \ar[r, "R(f)"'] & RY
+    \end{tikzcd}
+    \]
+    由三选二性质可以得到 $R(f)$ 也是弱等价. 这样 $R$ 可以视为一个从 $\mathcal{C}$ 到 $\mathcal{C}_\mathrm{f}$ 的保持弱等价的函子,
+    于是可以诱导函子 $R[\mathrm{W}^{-1}] \colon \mathcal{C}[\mathrm{W}^{-1}] \rightarrow \mathcal{C}_\mathrm{f}[\mathrm{W}^{-1}]$.
+    并且 $q$ 还可以诱导 $R[\mathrm{W}^{-1}] \circ i[\mathrm{W}^{-1}]$ 到 $\mathbbm{1}_{\mathcal{C}_\mathrm{f}[\mathrm{W}^{-1}]}$ 和
+    $i[\mathrm{W}^{-1}] \circ R[\mathrm{W}^{-1}]$ 到 $\mathbbm{1}_{\mathcal{C}[\mathrm{W}^{-1}]}$ 的自然同构(根据 \ref{lemma.1.2.2}).
+
+    类似地, 考虑余纤维性替换就可以得到范畴等价 $\mathcal{C}_\mathrm{cf}[\mathrm{W}^{-1}] \rightarrow \mathcal{C}_\mathrm{f}[\mathrm{W}^{-1}]$.
+    其他情况也是类似地.
+\end{proof}
+
+\subsection{同伦}
+现在我们给出 $\mathcal{C}_\mathrm{cf}[\mathrm{W}^{-1}]$ 的另一种构造, 这种构造直接由双纤维性对象之间的态射集模去同伦关系得到, 不需要添加额外的箭头,
+于是 $\mathcal{C}_\mathrm{cf}[\mathrm{W}^{-1}]$ 确实是(局部小)范畴, 进而 $\mathcal{C}[\mathrm{W}^{-1}]$ 也是范畴, 不需要更大的论域.
+
+在考虑 Hurewicz 模型结构的拓扑空间范畴, 我们知道两个连续映射 $X \rightarrow Y$ 之间的同伦由连续映射
+\[
+X \times I \longrightarrow Y,\qquad \text{或者 } X \longrightarrow Y^I
+\]
+给出, 形象地说 $X \times I$ 是 $X$ 为底的柱, 而 $Y^I$ 是 $Y$ 中路径的集合. 
+上面两种连续映射实际上是同伦不变的, 即如果有同伦于 $X \times I$ 的空间 $B'$, 那么给出连续映射 $B' \rightarrow Y$ 也能表示这种同伦.
+为此, 我们先给出柱和路径的一般定义:
+
+\begin{definition}
+    假设 $\mathcal{C}$ 是模型范畴, 则对象 $X$ 的
+    \begin{enumerate}
+        \item {\bf 柱对象}, 记作 $\mathrm{Cyl}(X)$, 由余对角态射 $\nabla = \mathbbm{1} \sqcup \mathbbm{1} \colon X \sqcup X \rightarrow X$ 的一个分解
+        \[
+        \begin{tikzcd}
+            X \sqcup X \ar[rr, "\nabla"] \ar[rd, "i"'] & & X \\
+            & \mathrm{Cyl}(X) \ar[ur, "p"'] &
+        \end{tikzcd}
+        \]
+        组成, 并且 $i = i_0 \sqcup i_1$ 需是余纤维化, $p$ 需是弱等价.
+
+        \item {\bf 路径对象}, 记作 $\mathrm{Path}(X)$, 由对角态射 $\Delta = \mathbbm{1} \times \mathbbm{1} \colon X \rightarrow X \times X$ 的一个分解
+        \[
+        \begin{tikzcd}
+            X \ar[rr, "\Delta"] \ar[rd, "i"'] & & X \times X \\
+            & \mathrm{Path}(X) \ar[ur, "p"'] &
+        \end{tikzcd}
+        \]
+        组成, 并且 $i$ 需是弱等价, $p = p_0 \times p_1$ 需是纤维化.
+    \end{enumerate}
+\end{definition}
+
+柱对象不唯一, 但是有一个典型的柱对象由模型结构的分解函子给出, 其他所有柱对象都弱等价到这个典型的柱对象: 有交换图
+\[
+\begin{tikzcd}
+    X \sqcup X \ar[r, "\alpha(\nabla)"] \ar[d, "i"'] & X' \ar[d, "\beta(\nabla)"] \\
+    \mathrm{Cyl}(X) \ar[r, "p"'] & X
+\end{tikzcd}
+\]
+再根据提升性质和三选二性质可以得到从 $\mathrm{Cyl}(X)$ 到 $X'$ 的弱等价. 
+在 Hurewicz 模型结构中, $X'$ 是 $X \times I$; $\alpha(\nabla) = i_0 \sqcup i_1$, 这里 $i_0(x) = (x,0),~ i_1(x) = (x,1)$; $\beta(\nabla)$ 就是标准投影.
+同时, 在这个模型结构中, 弱等价就是通常的同伦等价, 因此所有 $X$ 的柱对象都同伦等价于 $X \times I$.
+
+类似地, 路径对象也不唯一, 但是有一个典型的路径对象由模型结构的分解函子给出, 它弱等价到其他所有路径对象.
+在 Hurewicz 模型结构中, 这个典型的路径对象就是 $X^I$; $\gamma(\Delta)$ 把 $x \in X$ 变为常路径; $\delta(\Delta) = p_1 \times p_2$, 这里 $p_0(f) = f(0), p_1(f) = f(1)$. 
+$X^I$ 同伦到所有 $X$ 的路径对象.
+
+我们注意到在拓扑空间范畴中, 若有连续映射 $f,g \colon X \rightarrow Y$, 那么从 $f$ 到 $g$ 的同伦是连续映射 $H \colon X \times I \rightarrow Y$ 使得 $H \circ i_0 = f,~ H \circ i_1 = g$;
+或者是连续映射 $K \colon X \rightarrow Y^I$ 使得 $p_0 \circ K = f,~ p_1 \circ K = g$. 我们现在给出同伦的一般定义:
+
+\begin{definition}
+    设有模型范畴 $\mathcal{C}$ 和态射 $f,g \colon X \rightarrow Y$. 则有如下概念:
+    \begin{enumerate}
+        \item 从 $f$ 到 $g$ 的{\bf 左同伦}是从 $X$ 的某个柱对象到 $Y$ 的态射 $H \colon \mathrm{Cyl}(X) \rightarrow Y$ 使得 $H \circ i_0 = f$ 以及 $H \circ i_1 = g$.
+        这时我们说 $f$ 和 $g$ 是左同伦的, 写作 $f \overset{l}{\sim} g$.
+
+        \item 从 $f$ 到 $g$ 的{\bf 右同伦}是从 $X$ 到 $Y$ 的某个路径对象的态射 $K \colon X \rightarrow \mathrm{Path}(Y)$ 使得 $p_0 \circ K = f$ 以及 $p_1 \circ K = g$.
+        这时我们说 $f$ 到 $g$ 是右同伦的, 写作 $f \overset{r}{\sim} g$.
+
+        \item 我们说 $f$ 和 $g$ 是{\bf 同伦的}, 写作 $f \sim g$, 指的是它们同时是左右同伦的.
+
+        \item $f \colon X \rightarrow Y$ 是{\bf 同伦等价}指的是存在态射 $g \colon Y \rightarrow X$ 使得 $gf \sim \mathbbm{1}_X$ 以及 $fg \sim \mathbbm{1}_Y$.
+    \end{enumerate}
+\end{definition}
+
+在拓扑空间的 Hurewicz 模型结构中, 左右同伦的概念是等价的. 
+而在拓扑空间的 Quillen 模型结构中, $X \times I$ 和 $X^I$ 同样是 $X$ 的柱对象和路径对象, 如果 $X$ 还是 CW-复形, 那么它们还是典型的, 因此左右同伦的概念和 Hurewicz 模型结构的相同.
+
+在链复形范畴 $\operatorname{Ch}(R)$ 中, 单纯链 $I$:
+\[
+\cdots \longleftarrow 0 \longleftarrow I_0 = R \oplus R \overset{(1,-1)}{\longleftarrow} I_1 = R \longleftarrow 0 \longleftarrow \cdots
+\]
+起到了拓扑空间范畴中单位区间的作用, 因此对于链复形 $X$, $X \otimes I$ 是 $X$ 的柱对象, $(X \otimes I)_n = X_n \oplus X_n \oplus X_{n-1}$.
+则分次映射 $H \colon X \otimes I \rightarrow Y$ 可表示为 $f\oplus g \oplus s$, 这里 $f,g$ 是从 $X$ 到 $Y$ 的链映射, $s_{n-1} \colon X_{n-1} \rightarrow Y_n$.
+于是这个 $H$ 是链映射当且仅当 $s$ 是 $f,g$ 之间的链同伦, 也就是说模型范畴中的同伦也是链同伦的推广.
+
+
+\begin{proposition}
+    \label{prop.1.2.5}
+    设 $\mathcal{C}$ 是模型范畴, $f,g \colon B \rightarrow X$ 是两个态射. 那么有:
+    \begin{enumerate}[(i)]
+        \item 如果有 $f \overset{l}{\sim} g$ 以及 $h \colon X \rightarrow Y$, 那么 $hf \overset{l}{\sim} hg$. 
+        对偶地, 如果有 $f \overset{r}{\sim} g$ 以及 $h \colon A \rightarrow B$, 那么 $fh \overset{r}{\sim} gh$.
+
+        \item 如果 $X$ 是纤维性对象, $f \overset{l}{\sim} g$ 以及有 $h \colon A \rightarrow B$, 那么 $fh \overset{l}{\sim} gh$.
+        对偶地, 如果 $B$ 是余纤维性对象, $f \overset{r}{\sim} g$ 以及有 $h \colon X \rightarrow Y$, 那么 $hf \overset{r}{\sim} hg$.
+
+        \item 如果 $B$ 是余纤维性对象, 那么左同伦是 $\operatorname{Hom}_\mathcal{C}(B,X)$ 上的等价关系.
+        对偶地, 如果 $X$ 是纤维性对象, 那么右同伦是 $\operatorname{Hom}_\mathcal{C}(B,X)$ 上的等价关系.
+
+        \item 如果 $B$ 是余纤维性对象, $h\colon X \rightarrow Y$ 是平凡纤维化或者纤维性对象之间的弱等价, 那么 $h$ 诱导同构
+        \[
+        \operatorname{Hom}_\mathcal{C}(B,X) / \overset{l}{\sim} \xrightarrow{\cong} \operatorname{Hom}_\mathcal{C}(B,Y) / \overset{l}{\sim}
+        \]
+        对偶地, 如果 $X$ 是纤维性对象, $h \colon A \rightarrow B$ 是平凡余纤维化或者纤维性对象之间的弱等价, 那么 $h$ 诱导同构
+        \[
+        \operatorname{Hom}_\mathcal{C}(B,X) / \overset{r}{\sim} \xrightarrow{\cong} \operatorname{Hom}_\mathcal{C}(A,X) / \overset{r}{\sim}
+        \]
+
+        \item 如果 $B$ 是余纤维性对象, 那么 $f \overset{l}{\sim} g$ 推得出 $f \overset{r}{\sim} g$.
+        对偶地, 如果 $X$ 是纤维性对象, 那么 $f \overset{r}{\sim} g$ 推得出 $f \overset{l}{\sim} g$.
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    (i) 的证明是直接的, 这里不做介绍. 对于 (ii) 假设 $H \colon B' \rightarrow X$ 是从 $f$ 到 $g$ 的左同伦.
+    我们先考虑拓扑空间中的例子. 这时很显然, 如果 $B' = B \times I$, 那么 $H_t \circ h$ 就是从 $fh$ 到 $gh$ 的同伦.
+    $H_th$ 也可以视为 $H$ 与 $k = h \times \mathbbm{1} \colon A \times I \rightarrow B \times I$ 的复合.
+    $k$ 满足如下交换图:
+    \[
+    \begin{tikzcd}[column sep = 1.5cm]
+        A \sqcup A \ar[r, "i \circ (h \sqcup h)"] \ar[d, "j"] & B \times I \ar[d, "s"] \\
+        A \times I \ar[r, "ht"] \ar[ur, "k"] & B
+    \end{tikzcd}
+    \]
+    这里 $A \sqcup A \xrightarrow{j} A \times I\xrightarrow{t} A$ 是 $A$ 的典型柱对象, $B \sqcup B \xrightarrow{i} B \times I \xrightarrow{s} B$ 是 $B$ 的典型柱对象.
+    也就是说我们只需要把 $h \times \mathbbm{1}$ 类比为模型范畴中的上述交换图的提升即可. 
+    对任意对象 $A$, 我们都可以做柱对象 $A \sqcup A \xrightarrow{j} A' \xrightarrow{t} A$, 这里 $j$ 是余纤维化;
+    以及对 $B$ 做柱对象 $B \sqcup B \xrightarrow{i} B' \xrightarrow{s} B$, 用 $A'$ 和 $B'$ 代替上面的 $A \times I$ 和 $B \times I$ 即可,
+    因为在这种情况下 $s$ 是平凡纤维化, 肯定有提升.
+    
+    但是对任意给定的左同伦 $H \colon B' \rightarrow X$, 它的出发对象 $B'$ 不一定是典型的, 这导致 $s$ 不一定是平凡纤维化.
+    为此我们做下面论证, 说明当 $X$ 是纤维化对象时, 可以假设 $B'$ 是典型柱对象以及 $s$ 是平凡纤维化.
+    我们需要从 $H \colon B' \rightarrow X$ 出发找到从典型柱对象出发的左同伦.
+    那么利用模型范畴分解函子和三选二性质, 弱等价 $s$ 可以分解为平凡余纤维化 $B' \rightarrow B''$ 复合平凡纤维化 $B'' \xrightarrow{s'} B$.
+    两个余纤维化的复合得到 $B \sqcup B \rightarrow B''$ 也是余纤维化. 这样 $B''$ 也是 $B$ 的柱对象, 还是典型柱对象. 考虑 $X$ 是纤维性对象和下列交换图:
+    \[
+    \begin{tikzcd}
+        B' \ar[r, "H"] \ar[d] & X \ar[d] \\
+        B'' \ar[r] & 1
+    \end{tikzcd}
+    \]
+    那么有提升 $H' \colon B'' \rightarrow X$. 容易验证 $H'$ 也是从 $f$ 到 $g$ 的左同伦. 
+    也就是说在 $X$ 是纤维性对象的条件下, 可以假设 $B'$ 是典型柱对象, 以及 $s \colon B' \rightarrow B$ 是平凡纤维化.
+
+    现在证明 (iii). 左同伦总是自反和对称的. 现在假设 $H \colon B' \rightarrow X$ 是从 $f$ 到 $g$ 的左同伦, $H' \colon B'' \rightarrow X$ 是从 $g$ 到 $h$ 的左同伦.
+\end{proof}
+
+
+\printbibliography[heading=bibintoc, title=\ebibname]
+\end{document}
