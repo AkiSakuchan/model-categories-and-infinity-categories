@@ -210,7 +210,8 @@
     类似地可以证明其他情况以及对偶版本.
 \end{proof}
 
-根据这个引理, 对于模型范畴只需要给出它的弱等价类 $\mathrm{W}$ 以及纤维化类 $I$ (或者余纤维化类 $J$)即可, 剩下的余纤维化类是 $(I \cap \mathrm{W})\mathrm{-proj}$ (或者剩下的纤维化类是 $(J \cap W)\mathrm{-inj}$.
+根据这个引理, 对于模型范畴只需要给出它的弱等价类 $\mathrm{W}$ 以及纤维化类 $I$ (或者余纤维化类 $J$)即可, 
+剩下的余纤维化类是 $(I \cap \mathrm{W})\mathrm{-proj}$ (或者剩下的纤维化类是 $(J \cap W)\mathrm{-inj}$).
 
 \begin{corollary}
     \label{pushout-preserve-cofibration}
@@ -260,6 +261,12 @@
     那么 $F$ 把余纤维性对象之间的弱等价都变成 $\mathcal{D}$ 中的弱等价.
     对偶地, 如果 $F$ 把纤维性对象之间的平凡纤维化变成 $\mathcal{D}$ 中的弱等价, 那么 $F$ 也把纤维性对象之间的弱等价都变成 $\mathcal{D}$ 中的弱等价.
 \end{lemma}
+\begin{proof}
+    直接参考 \cite[Lemma 1.1.12]{hovey2007model}. 没有什么疑点.
+
+    利用推出, 把余纤维性对象的余纤维性传递到余积的标准插入里是个技巧.
+    此证明把要证明的态射和已知结果的态射捆绑到一起, 然后函子映射后, 结果就能互相共享.
+\end{proof}
 
 \subsection{例子}
 \begin{example}
@@ -587,20 +594,16 @@ $X^I$ 同伦到所有 $X$ 的路径对象.
     设 $j_0$ 是复合 $B \xrightarrow{i_0} B' \rightarrow C$, 而 $j_1$ 是复合 $B \xrightarrow{i'_1} B'' \rightarrow C$;
     又设 $s$ 是柱对象 $B'$ 对应的弱等价, $s'$ 是柱对象 $B''$ 对应的弱等价. 
     那么 $s \circ i_1 = s' \circ i'_0 = \mathbbm{1}_B$, 因此可以定义 $t \colon C \rightarrow B$. 
-    容易验证 $t \circ j_0 = t \circ j_1 = \mathbbm{1}_B$, 因此 $B \sqcup B \xrightarrow{j_0 \sqcup j_1} C \xrightarrow{t} B$ 是余对角态射 $B \sqcup B \xrightarrow{\mathbbm{1} \sqcup \mathbbm{1}} B$ 的分解. 考虑下列交换图:
-    \[
-    \begin{tikzcd}
-        0 \ar[r] \ar[d] & B \ar[d] \\
-        B \ar[r] & B \sqcup B
-    \end{tikzcd}
-    \]
-    这里 $B \rightarrow B\sqcup B$ 是相应的标准态射, 那么显然这是一个推出, 于是根据 \ref{pushout-preserve-cofibration} 以及 $B$ 是余纤维性对象, $B \rightarrow B \sqcup B$ 是余纤维化.
+    容易验证 $t \circ j_0 = t \circ j_1 = \mathbbm{1}_B$, 因此 $B \sqcup B \xrightarrow{j_0 \sqcup j_1} C \xrightarrow{t} B$ 是余对角态射 $B \sqcup B \xrightarrow{\mathbbm{1} \sqcup \mathbbm{1}} B$ 的分解. 参考 \ref{KenBrown-lemma} 的证明, 利用 $B$ 是余纤维性对象可得 $B \rightarrow B \sqcup B$ 是余纤维化.
     这样它和余纤维化 $B \sqcup B \rightarrow B'$ 的复合 $i_1 \colon B \rightarrow B'$ 就是余纤维化. 而 $s \circ i_1 = \mathbbm{1}$ 是弱等价, 因此 $i_1$ 是弱等价, 或者说平凡余纤维化.
     这样还是根据 \ref{pushout-preserve-cofibration}, $B'' \rightarrow C$ 也是平凡余纤维化, 它和 $t$ 的复合 $s'$ 是弱等价, 因此 $t$ 是弱等价.
 
     由于 $H \circ i_1 = g = H' \circ i'_0$, 因此从推出泛性质可得态射 $K \colon C \rightarrow X$. 容易验证 $K j_0 = f$ 以及 $K j_1 = h$.
     $K$ 还不是左同伦, 但是我们可以把 $j_0 \sqcup j_1$ 分解为余纤维化和平凡纤维化的复合 $B \sqcup B \xrightarrow{j} C' \xrightarrow{t'} C$.
     于是 $t \circ t'$ 是弱等价, 这样 $C'$ 就是 $B$ 的一个柱对象, 而 $Kt'$ 就是一个从 $f$ 到 $h$ 的左同伦.
+
+    这个证明中 $C$ 起到了类似柱对象的效果. 直接构造合适的柱对象和左同伦比较困难, 就放低要求, 先造出满足这个柱对象形式的余对角态射的分解, 以及有左同伦形式的 $K$, 
+    然后调整 $C$. 从 $H,H'$ 构造 $K$, 类似于代数拓扑中证明同伦关系的传递性时, 各自占一半来构造新的同伦.
 
     对于 (iv), 设 $h \colon X \rightarrow Y$ 是平凡纤维化. 则根据 (i) 和 (iii), 自然良定义了映射
     \[
@@ -624,7 +627,57 @@ $X^I$ 同伦到所有 $X$ 的路径对象.
     \]
     可以得到提升 $K \colon B' \rightarrow X$. 同时 $K i_0 = K i \circ I_1 = (f \sqcup g) \circ I_1 = f$, 这里 $I_1 \colon B \rightarrow B \sqcup B$ 是第一个因子的标准插入态射,
     类似地 $K i_1 = g$, 因此 $K$ 是从 $f$ 到 $g$ 的左同伦. $F$ 是单射.
+
+    对于 $h$ 是纤维性对象之间的弱等价的情况. 我们构造一个范畴 $\mathcal{D}$, 它对象都是 $\operatorname{Hom}_\mathcal{C}(B,X)/\overset{l}{\sim}$, 这里 $X$ 是 $\mathcal{C}$ 中的任意对象,
+    态射都是由 $\mathcal{C}$ 中的态射诱导而来. 取 $\mathcal{D}$ 中的弱等价为同构, 也就是双射.
+    那么 $X \mapsto \operatorname{Hom}_\mathcal{C}(B,X)/\overset{l}{\sim}$ 是从 $\mathcal{C}$ 到 $\mathcal{D}$ 的函子, 
+    并且把平凡纤维化都变成 $\mathcal{D}$ 中的弱等价, 也就是双射, 于是根据 Ken Brown 引理 \ref{KenBrown-lemma} 就能得到它把纤维性对象之间的弱等价都变成双射.
+
+    现在证明 (v). 设 $B$ 是余纤维性对象, $H \colon B' \rightarrow X$ 是从 $f$ 到 $g$ 的左同伦.
+    那么 $i_0 \colon B \rightarrow B'$ 是平凡余纤维化, 因为 $i_0$ 与弱等价 $B' \rightarrow B$ 的复合是 $\mathbbm{1}_B$.
+    假设 $X \xrightarrow{r} X' \xrightarrow{(p_0, p_1)} X \times X$ 是 $X$ 的路径对象. 那么我们从下列交换图
+    \[
+    \begin{tikzcd}
+        B \ar[r, "rf"] \ar[d, "i_0"] & X' \ar[d, "{(p_0, p_1)}"] \\
+        B' \ar[r, "{(fs, H)}"] & X \times X
+    \end{tikzcd}
+    \]
+    可以得到提升 $J \colon B' \rightarrow X'$. 于是可以验证 $K = J \circ i_1$ 是从 $f$ 到 $g$ 的右同伦.
 \end{proof}
+
+\begin{corollary}
+    \label{coro.1.2.6}
+    设 $\mathcal{C}$ 是模型范畴, $B$ 是余纤维性对象, $X$ 是纤维性对象. 那么 $\operatorname{Hom}_\mathcal{C}(B,X)$ 中的左右同伦关系重合, 也就是都是同伦关系.
+\end{corollary}
+
+\begin{corollary}
+    \label{coro.1.2.7}
+    $\mathcal{C}_\mathrm{cf}$ 的态射之间的有同伦关系 $\sim$ 且与复合相容. 所以范畴 $\mathcal{C}_\mathrm{cf} / \sim$ 存在, 记为 $\operatorname{Ho} \mathcal{C}$,
+    称为 $\mathcal{C}$ 的{\bf 同伦范畴(Homotopy category)}
+\end{corollary}
+
+\begin{theorem}[Whitehead 定理]
+    \label{Whitehead-theorem}
+    设 $\mathcal{C}$ 是模型范畴. 那么 $\mathcal{C}_\mathrm{cf}$ 的态射是弱等价当且仅当它是同伦等价.
+\end{theorem}
+这个定理作用在拓扑空间范畴的 Quillen 模型结构上就得到代数拓扑中的 Whitehead 定理 \cite[Theorem 8.4.3]{dieck2008algebraic}.
+作用在链复形范畴的投射模型结构上就得到投射消解的同伦唯一性, 作用在上链复形范畴的单射模型结构上就得到单射消解的同伦唯一性.
+\begin{proof}
+    参考 \cite[Proposition 1.2.8]{hovey2007model}. $\Rightarrow$ 的方向没有什么疑问.
+
+    $\Leftarrow$ 方向:
+    \begin{enumerate}
+        \item $C$ 为什么是双纤维性对象
+        \item 证明思路
+    \end{enumerate}
+\end{proof}
+
+\begin{corollary}
+    设 $\mathcal{C}$ 是模型范畴, $\gamma \colon \mathcal{C}_\mathrm{cf} \rightarrow \mathcal{C}_\mathrm{cf}[\mathrm{W}^{-1}]$ 是局部化的标准函子,
+    $\delta \colon \mathcal{C}_\mathrm{cf} \rightarrow \operatorname{Ho} \mathcal{C}$ 是同伦范畴的标准函子(\ref{coro.1.2.7}).
+    那么存在唯一一个范畴同构 $j \colon \operatorname{Ho} \mathcal{C} \rightarrow \mathcal{C}_\mathrm{cf}[\mathrm{W}^{-1}]$ 使得 $j \delta = \gamma$.
+    另外, $j$ 作用在对象上是不变的.
+\end{corollary}
 
 
 \printbibliography[heading=bibintoc, title=\ebibname]
