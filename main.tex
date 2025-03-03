@@ -422,6 +422,7 @@ $(\mathcal{C} \times \mathcal{C}')[(\mathrm{W} \times \mathrm{W}')^{-1}]$ 同构
 \end{proof}
 
 \begin{proposition}
+    \label{prop.1.2.3}
     设有模型范畴 $\mathcal{C}$, 它的由纤维性, 余纤维性和双纤维性对象组成的全子范畴分别记为 $\mathcal{C}_\mathrm{f},~ \mathcal{C}_\mathrm{c},~ \mathcal{C}_\mathrm{cf}$.
     那么包含函子可以诱导范畴等价 $\mathcal{C}_\mathrm{cf}[\mathrm{W}^{-1}] \rightarrow \mathcal{C}_\mathrm{f}[\mathrm{W}^{-1}] \rightarrow \mathcal{C}[\mathrm{W}^{-1}]$
     和范畴等价 $\mathcal{C}_\mathrm{cf}[\mathrm{W}^{-1}] \rightarrow \mathcal{C}_\mathrm{c}[\mathrm{W}^{-1}] \rightarrow \mathcal{C}[\mathrm{W}^{-1}]$.
@@ -667,18 +668,123 @@ $X^I$ 同伦到所有 $X$ 的路径对象.
 
     $\Leftarrow$ 方向:
     \begin{enumerate}
-        \item $C$ 为什么是双纤维性对象
+        \item $C$ 为什么是双纤维性对象?
+        这是因为 $0 \rightarrow C$ 是余纤维化的复合 $0 \rightarrow A \xrightarrow{g} C$. 类似地, $C \rightarrow 1$ 是纤维化的复合 $C \xrightarrow{p} B \rightarrow 1$.
+        
         \item 证明思路
     \end{enumerate}
 \end{proof}
 
 \begin{corollary}
+    \label{coro.1.2.9}
     设 $\mathcal{C}$ 是模型范畴, $\gamma \colon \mathcal{C}_\mathrm{cf} \rightarrow \mathcal{C}_\mathrm{cf}[\mathrm{W}^{-1}]$ 是局部化的标准函子,
     $\delta \colon \mathcal{C}_\mathrm{cf} \rightarrow \operatorname{Ho} \mathcal{C}$ 是同伦范畴的标准函子(\ref{coro.1.2.7}).
-    那么存在唯一一个范畴同构 $j \colon \operatorname{Ho} \mathcal{C} \rightarrow \mathcal{C}_\mathrm{cf}[\mathrm{W}^{-1}]$ 使得 $j \delta = \gamma$.
+    那么存在唯一范畴同构 $j \colon \operatorname{Ho} \mathcal{C} \rightarrow \mathcal{C}_\mathrm{cf}[\mathrm{W}^{-1}]$ 使得 $j \delta = \gamma$.
     另外, $j$ 作用在对象上是不变的.
 \end{corollary}
 
+\begin{theorem}
+    设 $\mathcal{C}$ 是模型范畴, $\gamma \colon \mathcal{C} \rightarrow \mathcal{C}[\mathrm{W}^{-1}]$ 是局部化的标准函子,
+    $Q$ 是余纤维性替换函子, $R$ 是纤维性替换函子. 那么
+    \begin{enumerate}[(i)]
+        \item 插入函子 $\mathcal{C}_\mathrm{cf} \rightarrow \mathcal{C}$ 诱导范畴等价 
+        $\operatorname{Ho} \mathcal{C} \xrightarrow{\cong} \mathcal{C}_\mathrm{cf}[\mathrm{W}^{-1}] \rightarrow \mathcal{C}[\mathrm{W}^{-1}]$
+
+        \item 有自然同构
+        \[
+        \operatorname{Hom}_{\operatorname{Ho} \mathcal{C}}(QRX, QRY) \cong \operatorname{Hom}_{\mathcal{C}[\mathrm{W}^{-1}]}(\gamma X, \gamma Y) \cong
+        \operatorname{Hom}_{\operatorname{Ho} \mathcal{C}}(RQX, RQY)
+        \]
+        特别地, $\mathcal{C}[\mathrm{W}^{-1}]$ 是局部小范畴, 不需要推到更大的论域.
+
+        \item 函子 $\gamma \colon \mathcal{C} \rightarrow \mathcal{C}[\mathrm{W}^{-1}]$ 把左同伦或者右同伦变为同一个态射.
+
+        \item 如果 $\mathcal{C}$ 中的态射 $f \colon A \rightarrow B$ 使得 $\gamma f$ 是 $\mathcal{C}[\mathrm{W}^{-1}]$ 中的同构, 那么 $f$ 是弱等价.
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    这是前面一些结论 \ref{prop.1.2.3}, \ref{coro.1.2.9}, \ref{Whitehead-theorem} 的推论. 具体参见 \cite[Theorem 1.2.10]{hovey2007model}.
+\end{proof}
+
+今后 $\mathcal{C}[\mathrm{W}^{-1}]$ 和 $\operatorname{Ho} \mathcal{C}$ 中的态射集常用 $[X,Y]$ 来表示.
+另外对模型范畴可以不区分局部化和同伦范畴.
+
+\section{Quillen 伴随与导出函子}
+本节将研究模型范畴之间的态射, 我们把这种态射称为 Quillen 伴随或者 Quillen 函子. Quillen 函子可以诱导同伦范畴之间的函子.
+从 Quillen 函子到导出函子的过程并不是函子性的, 但是只差一个自然同构.
+
+\subsection{Quillen 函子}
+\begin{definition}
+    设 $\mathcal{C}, \mathcal{D}$ 是模型范畴, $(F,U) \colon \mathcal{C} \leftrightarrows \mathcal{D}$ 是伴随函子.
+    那么
+    \begin{itemize}
+        \item $F$ 如果保持余纤维化和平凡余纤维化, 那么称其为{\bf 左 Quillen 函子};
+        \item $G$ 如果保持纤维化和平凡纤维化, 那么称其为{\bf 右 Quillen 函子};
+        \item 如果 $F$ 是左 Quillen 函子, 那么称 $(F,G)$ 为{\bf Quillen 伴随}
+    \end{itemize}
+\end{definition}
+根据 Ken Brown 引理 \ref{KenBrown-lemma}, 左 Quillen 函子保持余纤维性对象之间的弱等价, 右 Quillen 函子保持纤维性对象之间的弱等价.
+大部分情况下, 我们可以只假设左伴随保持余纤维性对象和它们之间的弱等价, 或者对偶地右伴随保持纤维性对象和它们之间的弱等价, 不过通常没什么必要, 只会使得问题变得更复杂.
+Quillen 伴随最著名的例子是从具有 Quillen 模型结构的 $\mathbf{Top}$ 到具有 Ken-Quillen 模型结构的单纯集范畴 $\mathbf{sSet}$ 的奇异复形函子和反过来的几何实现函子. 
+实际上这个伴随是一个等价, 表明 $\mathbf{Top}$ 和 $\mathbf{sSet}$ 具有相同的同伦信息.
+
+\begin{lemma}
+    \label{lemma.1.3.4}
+    假设 $(F,U) \colon \mathcal{C} \leftrightarrows \mathcal{D}$ 是伴随函子. 那么 $F$ 是左 Quillen 函子当且仅当 $G$ 是右 Quillen 函子.
+\end{lemma}
+\begin{proof}
+    设 $f \colon A \rightarrow B$ 是 $\mathcal{C}$ 中的态射, $p \colon X \rightarrow Y$ 是 $\mathcal{D}$ 中的态射.
+    设 $Ff$ 对 $p$ 具有左提升性质. 对任意下列交换图:
+    \[
+    \begin{tikzcd}
+        A \ar[r] \ar[d, "f"'] & G(X) \ar[d, "Gp"] \\
+        B \ar[r] & G(Y)
+    \end{tikzcd}
+    \]
+    经过伴随函子的自然同构, 有交换图
+    \[
+    \begin{tikzcd}
+        F(A) \ar[r] \ar[d, "Ff"'] & X \ar[d, "p"] \\
+        F(B) \ar[r] & Y
+    \end{tikzcd}
+    \]
+    由于 $Ff$ 对 $p$ 具有左提升性质, 因此存在提升 $k \colon F(B) \rightarrow X$ 满足上述交换图, 经过伴随的自然同构, 就有 $k' \colon B \rightarrow G(X)$, 也是前一个交换图的提升.
+    反过来是类似的, 于是 $Ff$ 对 $p$ 具有左提升性质当且仅当 $f$ 对 $Gp$ 具有左提升性质.
+    然后借助 \ref{lemma.1.1.10} 即可得证.
+\end{proof}
+
+Quillen 伴随的复合仍然是 Quillen 伴随, 设 $(F,G) \colon \mathcal{C} \leftrightarrows \mathcal{D}$ 和 $(F',G') \colon \mathcal{D} \leftrightarrows \mathcal{E}$ 两个 Quillen 伴随,
+那么有自然同构
+\[
+\operatorname{Hom}_\mathcal{E}(F'FA, B) \cong \operatorname{Hom}_\mathcal{D}(FA, G'B) \cong \operatorname{Hom}_\mathcal{C}(A, GG' B)
+\]
+这样的复合自然满足结合律, 也有单位元. 因此可以把 Quillen 伴随设为模型范畴的之间的态射. 注意 Quillen 伴随不必保持函子性分解.
+
+如果 $(F,G) \colon \mathcal{C} \leftrightarrows \mathcal{D}$ 是 Quillen 伴随, 那么
+\[
+D(F,G) = (G,F) \colon D\mathcal{D} \rightarrow D\mathcal{C}
+\]
+是对偶模型范畴的 Quillen 伴随.
+
+\subsection{导出函子}
+\begin{definition}
+    设 $(F,G) \colon \mathcal{C} \rightarrow \mathcal{D}$ 是 Quillen 伴随. 那么
+    \begin{itemize}
+        \item {\bf 左全导出函子} $\mathbb{L}F \colon \operatorname{Ho} \mathcal{C} \rightarrow \operatorname{Ho} \mathcal{D}$ 是复合
+        \[
+        \operatorname{Ho} \mathcal{C} \xrightarrow{\operatorname{Ho} Q} \operatorname{Ho} \mathcal{C}_\mathrm{c} \xrightarrow{\operatorname{Ho} F} \operatorname{Ho} \mathcal{D}
+        \]
+        这里 $Q$ 是余纤维性替换. 若有左 Quillen 函子之间的自然变换 $\tau \colon F \rightarrow F'$, 那么全导出自然变换 $\mathbb{L}\tau \colon \mathbb{L}F \rightarrow \mathbb{L}F'$
+        由 $(\mathbb{L}\tau)_X = \tau_{QX}$ 组成.
+
+        \item {\bf 右全导出函子} $\mathbb{R}G \colon \operatorname{Ho} \mathcal{D} \rightarrow \operatorname{Ho} \mathcal{C}$ 是复合
+        \[
+        \operatorname{Ho} \mathcal{D} \xrightarrow{\operatorname{Ho} R} \operatorname{Ho} \mathcal{D}_\mathrm{f} \xrightarrow{\operatorname{Ho} G} \operatorname{Ho} \mathcal{C}
+        \]
+        这里 $R$ 是纤维性替换. 若有右 Quillen 函子之间的自然变换 $\tau \colon G \rightarrow G'$, 那么全导出自然变换 $\mathbb{R}\tau \colon \mathbb{R}G \rightarrow \mathbb{R}G'$
+        由 $(\mathbb{R}\tau)_X = \tau_{RX}$ 组成.
+    \end{itemize}
+\end{definition}
 
 \printbibliography[heading=bibintoc, title=\ebibname]
 \end{document}
