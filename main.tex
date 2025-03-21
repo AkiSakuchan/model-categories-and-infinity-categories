@@ -707,84 +707,60 @@ $X^I$ 同伦到所有 $X$ 的路径对象.
 \end{proof}
 
 今后 $\mathcal{C}[\mathrm{W}^{-1}]$ 和 $\operatorname{Ho} \mathcal{C}$ 中的态射集常用 $[X,Y]$ 来表示.
-另外对模型范畴可以不区分局部化和同伦范畴.
 
 \section{Quillen 伴随与导出函子}
-本节将研究模型范畴之间的态射, 我们把这种态射称为 Quillen 伴随或者 Quillen 函子. Quillen 函子可以诱导同伦范畴之间的函子.
-从 Quillen 函子到导出函子的过程并不是函子性的, 但是只差一个自然同构.
 
-\subsection{Quillen 函子}
-\begin{definition}
-    设 $\mathcal{C}, \mathcal{D}$ 是模型范畴, $(F,U) \colon \mathcal{C} \leftrightarrows \mathcal{D}$ 是伴随函子.
-    那么
-    \begin{itemize}
-        \item $F$ 如果保持余纤维化和平凡余纤维化, 那么称其为{\bf 左 Quillen 函子};
-        \item $G$ 如果保持纤维化和平凡纤维化, 那么称其为{\bf 右 Quillen 函子};
-        \item 如果 $F$ 是左 Quillen 函子, 那么称 $(F,G)$ 为{\bf Quillen 伴随}
-    \end{itemize}
-\end{definition}
-根据 Ken Brown 引理 \ref{KenBrown-lemma}, 左 Quillen 函子保持余纤维性对象之间的弱等价, 右 Quillen 函子保持纤维性对象之间的弱等价.
-大部分情况下, 我们可以只假设左伴随保持余纤维性对象和它们之间的弱等价, 或者对偶地右伴随保持纤维性对象和它们之间的弱等价, 不过通常没什么必要, 只会使得问题变得更复杂.
-Quillen 伴随最著名的例子是从具有 Quillen 模型结构的 $\mathbf{Top}$ 到具有 Ken-Quillen 模型结构的单纯集范畴 $\mathbf{sSet}$ 的奇异复形函子和反过来的几何实现函子. 
-实际上这个伴随是一个等价, 表明 $\mathbf{Top}$ 和 $\mathbf{sSet}$ 具有相同的同伦信息.
-
-\begin{lemma}
-    \label{lemma.1.3.4}
-    假设 $(F,U) \colon \mathcal{C} \leftrightarrows \mathcal{D}$ 是伴随函子. 那么 $F$ 是左 Quillen 函子当且仅当 $G$ 是右 Quillen 函子.
-\end{lemma}
-\begin{proof}
-    设 $f \colon A \rightarrow B$ 是 $\mathcal{C}$ 中的态射, $p \colon X \rightarrow Y$ 是 $\mathcal{D}$ 中的态射.
-    设 $Ff$ 对 $p$ 具有左提升性质. 对任意下列交换图:
-    \[
-    \begin{tikzcd}
-        A \ar[r] \ar[d, "f"'] & G(X) \ar[d, "Gp"] \\
-        B \ar[r] & G(Y)
-    \end{tikzcd}
-    \]
-    经过伴随函子的自然同构, 有交换图
-    \[
-    \begin{tikzcd}
-        F(A) \ar[r] \ar[d, "Ff"'] & X \ar[d, "p"] \\
-        F(B) \ar[r] & Y
-    \end{tikzcd}
-    \]
-    由于 $Ff$ 对 $p$ 具有左提升性质, 因此存在提升 $k \colon F(B) \rightarrow X$ 满足上述交换图, 经过伴随的自然同构, 就有 $k' \colon B \rightarrow G(X)$, 也是前一个交换图的提升.
-    反过来是类似的, 于是 $Ff$ 对 $p$ 具有左提升性质当且仅当 $f$ 对 $Gp$ 具有左提升性质.
-    然后借助 \ref{lemma.1.1.10} 即可得证.
-\end{proof}
-
-Quillen 伴随的复合仍然是 Quillen 伴随, 设 $(F,G) \colon \mathcal{C} \leftrightarrows \mathcal{D}$ 和 $(F',G') \colon \mathcal{D} \leftrightarrows \mathcal{E}$ 两个 Quillen 伴随,
-那么有自然同构
+\subsection{Kan 扩张}
+{\bf Kan 扩张}是范畴论中的一种万有构造, 反过来万有构造也可以用 Kan 扩张来表示. 
+给定一对函子 $K \colon \mathcal{C} \rightarrow \mathcal{D}, F \colon \mathcal{C} \rightarrow \mathcal{E}$, 通常不能期待 $F$ 能沿着 $K$ 扩展.
 \[
-\operatorname{Hom}_\mathcal{E}(F'FA, B) \cong \operatorname{Hom}_\mathcal{D}(FA, G'B) \cong \operatorname{Hom}_\mathcal{C}(A, GG' B)
+\begin{tikzcd}
+    \mathcal{C} \ar[r, "F"] \ar[d, "K"'] & \mathcal{E} \\
+    \mathcal{D} \ar[ur, dashrightarrow] &
+\end{tikzcd}
 \]
-这样的复合自然满足结合律, 也有单位元. 因此可以把 Quillen 伴随设为模型范畴的之间的态射. 注意 Quillen 伴随不必保持函子性分解.
+形象来说, 每个 $x' \in \mathcal{D}$, 其原像 $K^{-1}(x')$ 可能被 $F$ 映射到 $\mathcal{D}$ 中的不同对象.
+因此更可行的是问是否存在这种扩展的最佳逼近, 这个最佳指的是具有类似极限或者上极限的泛性质. 实际上所有万有构造都可以表示为 Kan 扩张\cite{riehl2014categorical}.
 
-如果 $(F,G) \colon \mathcal{C} \leftrightarrows \mathcal{D}$ 是 Quillen 伴随, 那么
-\[
-D(F,G) = (G,F) \colon D\mathcal{D} \rightarrow D\mathcal{C}
-\]
-是对偶模型范畴的 Quillen 伴随.
-
-\subsection{导出函子}
 \begin{definition}
-    设 $(F,G) \colon \mathcal{C} \rightarrow \mathcal{D}$ 是 Quillen 伴随. 那么
-    \begin{itemize}
-        \item {\bf 左全导出函子} $\mathbb{L}F \colon \operatorname{Ho} \mathcal{C} \rightarrow \operatorname{Ho} \mathcal{D}$ 是复合
-        \[
-        \operatorname{Ho} \mathcal{C} \xrightarrow{\operatorname{Ho} Q} \operatorname{Ho} \mathcal{C}_\mathrm{c} \xrightarrow{\operatorname{Ho} F} \operatorname{Ho} \mathcal{D}
-        \]
-        这里 $Q$ 是余纤维性替换. 若有左 Quillen 函子之间的自然变换 $\tau \colon F \rightarrow F'$, 那么全导出自然变换 $\mathbb{L}\tau \colon \mathbb{L}F \rightarrow \mathbb{L}F'$
-        由 $(\mathbb{L}\tau)_X = \tau_{QX}$ 组成.
+    给定一对函子 $K \colon \mathcal{C} \rightarrow \mathcal{D}, F \colon \mathcal{C} \rightarrow \mathcal{E}$.
+    $F$ 沿着 $K$ 的{\bf 左 Kan 扩张}由函子 $G \colon \mathcal{D} \rightarrow \mathcal{E}$ 和自然变换 $\eta \colon F \rightarrow G K$ 组成,
+    并且对任意这样的元组, 也就是函子 $G' \colon \mathcal{D} \rightarrow \mathcal{E}$ 和自然变换 $\gamma \colon F \rightarrow G'K$,
+    都唯一存在自然变换 $\alpha \colon G \rightarrow G'$ 使得 $\gamma$ 可以表示为复合
+    \[
+    F \overset{\eta}{\longrightarrow} G K \overset{\alpha_K}{\longrightarrow} G' K
+    \]
+    此时, 把 $G$ 记为 $\operatorname{Lan}_K F$.
 
-        \item {\bf 右全导出函子} $\mathbb{R}G \colon \operatorname{Ho} \mathcal{D} \rightarrow \operatorname{Ho} \mathcal{C}$ 是复合
-        \[
-        \operatorname{Ho} \mathcal{D} \xrightarrow{\operatorname{Ho} R} \operatorname{Ho} \mathcal{D}_\mathrm{f} \xrightarrow{\operatorname{Ho} G} \operatorname{Ho} \mathcal{C}
-        \]
-        这里 $R$ 是纤维性替换. 若有右 Quillen 函子之间的自然变换 $\tau \colon G \rightarrow G'$, 那么全导出自然变换 $\mathbb{R}\tau \colon \mathbb{R}G \rightarrow \mathbb{R}G'$
-        由 $(\mathbb{R}\tau)_X = \tau_{RX}$ 组成.
-    \end{itemize}
+    对偶地, $F$ 沿着 $K$ 的{\bf 右 Kan 扩张}由函子 $G \colon \mathcal{D} \rightarrow \mathcal{E}$ 和自然变换 $\epsilon \colon GK \rightarrow F$ 组成,
+    并且对任意函子 $G' \colon \mathcal{D} \rightarrow \mathcal{E}$ 和自然变换 $\delta \colon G'K \rightarrow F$,
+    都唯一存在自然变换 $\alpha \colon G' \rightarrow G$ 使得 $\delta$ 可以表示为复合
+    \[
+    G'K \overset{\alpha_K}{\longrightarrow} GK \overset{\epsilon}{\longrightarrow} F
+    \]
+    此时, 把 $G$ 记为 $\operatorname{Ran}_K F$.
 \end{definition}
+
+\begin{example}
+    如果 $F$ 可以分解为 $H \circ K$, 那么 $(H, \mathbbm{1}_F)$ {\bf 并不一定}是 $F$ 沿着 $K$ 的左 Kan 扩张.
+
+    事实上, 设有 $G \colon \mathcal{D} \rightarrow \mathcal{E}$ 和相应的自然变换 $\gamma \colon F \rightarrow GK$. 那么自然有 $\gamma \colon HK \rightarrow GK$.
+    然而这并不意味着就存在 $\alpha \colon H \rightarrow G$ 使得 $\gamma = \alpha_K$.
+
+    考虑范畴 $\mathcal{C}$ 为集合 $\{0,1\}$，范畴 $\mathcal{D}$ 为 $\{0,1,2\}$, 范畴 $\mathcal{E}$ 为 $\{0,1,2\}$.
+    这些范畴的不同对象之间没有态射, 也就是说比如 $\operatorname{Hom}_\mathcal{E}(1,2)$ 是空集.
+    设 $K\colon \mathcal{C} \rightarrow \mathcal{D}$ 为插入函子, $H\colon \mathcal{D} \rightarrow \mathcal{E}$ 为恒同函子.
+    再设 $G(0)=0$，$G(1)=G(2)=1$. 那么 $F=HK$ 和 $GK$ 都是恒同函子, 当然存在一个自然变换 $\gamma \colon HK \rightarrow GK$.
+    但是假设有自然变换 $\alpha \colon H \rightarrow G$，那么就有三个态射:
+
+    \begin{align*}
+        \alpha_0 &\colon H(0) = 0 \rightarrow G(0)=0 \\
+        \alpha_1 &\colon H(1) = 1 \rightarrow G(1)=1 \\
+        \alpha_2 &\colon H(2) = 2 \rightarrow G(2)=1
+    \end{align*}
+
+然而根据假设 $\alpha_2 \colon 2 \rightarrow 1$ 在 $\mathcal{E}$ 中是不存在的.
+\end{example}
 
 \printbibliography[heading=bibintoc, title=\ebibname]
 \end{document}
