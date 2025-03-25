@@ -537,16 +537,16 @@ $X^I$ 同伦到所有 $X$ 的路径对象.
         \item 如果 $X$ 是纤维性对象, $f \overset{l}{\sim} g$ 以及有 $h \colon A \rightarrow B$, 那么 $fh \overset{l}{\sim} gh$.
         对偶地, 如果 $B$ 是余纤维性对象, $f \overset{r}{\sim} g$ 以及有 $h \colon X \rightarrow Y$, 那么 $hf \overset{r}{\sim} hg$.
 
-        \item 如果 $B$ 是余纤维性对象, 那么左同伦是 $\operatorname{Hom}_\mathcal{C}(B,X)$ 上的等价关系.
-        对偶地, 如果 $X$ 是纤维性对象, 那么右同伦是 $\operatorname{Hom}_\mathcal{C}(B,X)$ 上的等价关系.
+        \item 如果 $B$ 是余纤维性对象, 那么左同伦是 $\mathcal{C}(B,X)$ 上的等价关系.
+        对偶地, 如果 $X$ 是纤维性对象, 那么右同伦是 $\mathcal{C}(B,X)$ 上的等价关系.
 
         \item 如果 $B$ 是余纤维性对象, $h\colon X \rightarrow Y$ 是平凡纤维化或者纤维性对象之间的弱等价, 那么 $h$ 诱导双射
         \[
-        \operatorname{Hom}_\mathcal{C}(B,X) / \overset{l}{\sim} \xrightarrow{\cong} \operatorname{Hom}_\mathcal{C}(B,Y) / \overset{l}{\sim}
+        \mathcal{C}(B,X) / \overset{l}{\sim} \xrightarrow{\cong} \mathcal{C}(B,Y) / \overset{l}{\sim}
         \]
         对偶地, 如果 $X$ 是纤维性对象, $h \colon A \rightarrow B$ 是平凡余纤维化或者纤维性对象之间的弱等价, 那么 $h$ 诱导双射
         \[
-        \operatorname{Hom}_\mathcal{C}(B,X) / \overset{r}{\sim} \xrightarrow{\cong} \operatorname{Hom}_\mathcal{C}(A,X) / \overset{r}{\sim}
+        \mathcal{C}(B,X) / \overset{r}{\sim} \xrightarrow{\cong} \mathcal{C}(A,X) / \overset{r}{\sim}
         \]
 
         \item 如果 $B$ 是余纤维性对象, 那么 $f \overset{l}{\sim} g$ 推得出 $f \overset{r}{\sim} g$.
@@ -608,7 +608,7 @@ $X^I$ 同伦到所有 $X$ 的路径对象.
 
     对于 (iv), 设 $h \colon X \rightarrow Y$ 是平凡纤维化. 则根据 (i) 和 (iii), 自然良定义了映射
     \[
-    F \colon \operatorname{Hom}_\mathcal{C}(B,X)/ \overset{l}{\sim} \longrightarrow \operatorname{Hom}_\mathcal{C}(B,Y)/ \overset{l}{\sim}
+    F \colon \mathcal{C}(B,X)/ \overset{l}{\sim} \longrightarrow \mathcal{C}(B,Y)/ \overset{l}{\sim}
     \]
     我们需要证明它是双射. 首先假设有态射 $f' \colon B \rightarrow Y$. 因为 $B$ 是余纤维性对象, 从交换图
     \[
@@ -629,9 +629,9 @@ $X^I$ 同伦到所有 $X$ 的路径对象.
     可以得到提升 $K \colon B' \rightarrow X$. 同时 $K i_0 = K i \circ I_1 = (f \sqcup g) \circ I_1 = f$, 这里 $I_1 \colon B \rightarrow B \sqcup B$ 是第一个因子的标准插入态射,
     类似地 $K i_1 = g$, 因此 $K$ 是从 $f$ 到 $g$ 的左同伦. $F$ 是单射.
 
-    对于 $h$ 是纤维性对象之间的弱等价的情况. 我们构造一个范畴 $\mathcal{D}$, 它对象都是 $\operatorname{Hom}_\mathcal{C}(B,X)/\overset{l}{\sim}$, 这里 $X$ 是 $\mathcal{C}$ 中的任意对象,
+    对于 $h$ 是纤维性对象之间的弱等价的情况. 我们构造一个范畴 $\mathcal{D}$, 它对象都是 $\mathcal{C}(B,X)/\overset{l}{\sim}$, 这里 $X$ 是 $\mathcal{C}$ 中的任意对象,
     态射都是由 $\mathcal{C}$ 中的态射诱导而来. 取 $\mathcal{D}$ 中的弱等价为同构, 也就是双射.
-    那么 $X \mapsto \operatorname{Hom}_\mathcal{C}(B,X)/\overset{l}{\sim}$ 是从 $\mathcal{C}$ 到 $\mathcal{D}$ 的函子, 
+    那么 $X \mapsto \mathcal{C}(B,X)/\overset{l}{\sim}$ 是从 $\mathcal{C}$ 到 $\mathcal{D}$ 的函子, 
     并且把平凡纤维化都变成 $\mathcal{D}$ 中的弱等价, 也就是双射, 于是根据 Ken Brown 引理 \ref{KenBrown-lemma} 就能得到它把纤维性对象之间的弱等价都变成双射.
 
     现在证明 (v). 设 $B$ 是余纤维性对象, $H \colon B' \rightarrow X$ 是从 $f$ 到 $g$ 的左同伦.
@@ -648,7 +648,7 @@ $X^I$ 同伦到所有 $X$ 的路径对象.
 
 \begin{corollary}
     \label{coro.1.2.6}
-    设 $\mathcal{C}$ 是模型范畴, $B$ 是余纤维性对象, $X$ 是纤维性对象. 那么 $\operatorname{Hom}_\mathcal{C}(B,X)$ 中的左右同伦关系重合, 也就是都是同伦关系.
+    设 $\mathcal{C}$ 是模型范畴, $B$ 是余纤维性对象, $X$ 是纤维性对象. 那么 $\mathcal{C}(B,X)$ 中的左右同伦关系重合, 也就是都是同伦关系.
 \end{corollary}
 
 \begin{corollary}
@@ -692,8 +692,8 @@ $X^I$ 同伦到所有 $X$ 的路径对象.
 
         \item 有自然同构
         \[
-        \operatorname{Hom}_{\operatorname{Ho} \mathcal{C}}(QRX, QRY) \cong \operatorname{Hom}_{\mathcal{C}[\mathrm{W}^{-1}]}(\gamma X, \gamma Y) \cong
-        \operatorname{Hom}_{\operatorname{Ho} \mathcal{C}}(RQX, RQY)
+        {\operatorname{Ho} \mathcal{C}}(QRX, QRY) \cong {\mathcal{C}[\mathrm{W}^{-1}]}(\gamma X, \gamma Y) \cong
+        {\operatorname{Ho} \mathcal{C}}(RQX, RQY)
         \]
         特别地, $\mathcal{C}[\mathrm{W}^{-1}]$ 是局部小范畴, 不需要推到更大的论域.
 
@@ -707,10 +707,13 @@ $X^I$ 同伦到所有 $X$ 的路径对象.
 \end{proof}
 
 今后 $\mathcal{C}[\mathrm{W}^{-1}]$ 和 $\operatorname{Ho} \mathcal{C}$ 中的态射集常用 $[X,Y]$ 来表示.
+并且不再区分 $\mathcal{C}[\mathrm{W}^{-1}]$ 和 $\operatorname{Ho} \mathcal{C}$, 如果有必要则会具体指出是 
+$\operatorname{Ho}\mathcal{C}_\mathrm{f},~ \operatorname{Ho}\mathcal{C}_\mathrm{c}$ 或者 $\operatorname{Ho} \mathcal{C}_\mathrm{cf}$.
 
-\section{Quillen 伴随与导出函子}
+\section{导出函子与 Quillen 伴随}
 
 \subsection{Kan 扩张}
+\subsubsection{定义}
 {\bf Kan 扩张}是范畴论中的一种万有构造, 反过来万有构造也可以用 Kan 扩张来表示. 
 给定一对函子 $K \colon \mathcal{C} \rightarrow \mathcal{D}, F \colon \mathcal{C} \rightarrow \mathcal{E}$, 通常不能期待 $F$ 能沿着 $K$ 扩展.
 \[
@@ -741,6 +744,10 @@ $X^I$ 同伦到所有 $X$ 的路径对象.
     此时, 把 $G$ 记为 $\operatorname{Ran}_K F$.
 \end{definition}
 
+\begin{remark}
+    根据泛性质, 或者米田引理, Kan 扩张在自然同构意义下唯一.
+\end{remark}
+
 \begin{example}
     如果 $F$ 可以分解为 $H \circ K$, 那么 $(H, \mathbbm{1}_F)$ {\bf 并不一定}是 $F$ 沿着 $K$ 的左 Kan 扩张.
 
@@ -748,7 +755,7 @@ $X^I$ 同伦到所有 $X$ 的路径对象.
     然而这并不意味着就存在 $\alpha \colon H \rightarrow G$ 使得 $\gamma = \alpha_K$.
 
     考虑范畴 $\mathcal{C}$ 为集合 $\{0,1\}$，范畴 $\mathcal{D}$ 为 $\{0,1,2\}$, 范畴 $\mathcal{E}$ 为 $\{0,1,2\}$.
-    这些范畴的不同对象之间没有态射, 也就是说比如 $\operatorname{Hom}_\mathcal{E}(1,2)$ 是空集.
+    这些范畴的不同对象之间没有态射, 也就是说比如 $\mathcal{E}(1,2)$ 是空集.
     设 $K\colon \mathcal{C} \rightarrow \mathcal{D}$ 为插入函子, $H\colon \mathcal{D} \rightarrow \mathcal{E}$ 为恒同函子.
     再设 $G(0)=0$，$G(1)=G(2)=1$. 那么 $F=HK$ 和 $GK$ 都是恒同函子, 当然存在一个自然变换 $\gamma \colon HK \rightarrow GK$.
     但是假设有自然变换 $\alpha \colon H \rightarrow G$，那么就有三个态射:
@@ -761,6 +768,70 @@ $X^I$ 同伦到所有 $X$ 的路径对象.
 
 然而根据假设 $\alpha_2 \colon 2 \rightarrow 1$ 在 $\mathcal{E}$ 中是不存在的.
 \end{example}
+
+\subsubsection{Kan 扩张与极限}
+
+\subsubsection{逐点 Kan 扩张和绝对 Kan 扩张}
+
+\subsubsection{其他概念与 Kan 扩张的关系}
+
+\subsection{导出函子}
+两个模型范畴之间的函子很多时候并不保持弱等价, 这使得它们无法诱导局部化范畴, 或者说同伦范畴之间的函子. 为此我们需要一个最佳的同伦逼近, 这就是所谓的导出函子:
+
+\begin{definition}
+    设 $\mathcal{C}$ 和 $\mathcal{D}$ 是模型范畴, $\gamma \colon \mathcal{C} \rightarrow \operatorname{Ho} \mathcal{C}$ 和 $\delta \colon \mathcal{D} \rightarrow \operatorname{Ho} \mathcal{D}$ 是局部化. 又设$F \colon \mathcal{C} \rightarrow \mathcal{D}$ 是函子.
+    那么 $\delta F$ 沿着 $\gamma$ 的右 Kan 扩张 $\operatorname{Ran}_\gamma \delta F$ 称为 $F$ 的{\bf 左全导出函子}, 记作 $\mathbf{L}F$.
+    \[
+    \begin{tikzcd}
+        \mathcal{C} \ar[r, "F"] \ar[d, "\gamma"'] & \mathcal{D} \ar[d, "\delta"] \\
+        \operatorname{Ho} \mathcal{C} \ar[r, "\mathbf{L}F"'] & \operatorname{Ho} \mathcal{D}
+    \end{tikzcd}
+    \]
+
+    对偶地, $F$ 的{\bf 右全导出函子} $\mathbf{R}F$ 是 $\delta F$ 沿着 $\gamma$ 的左 Kan 扩张 $\operatorname{Lan}_\gamma \delta F$.
+
+    $F$ 如果保持弱等价, 那么称其为同伦的. 
+    $F$ 的{\bf 左导出函子}是一个同伦函子 $\mathbb{L}F \colon \mathcal{C} \rightarrow \mathcal{D}$ 和一个自然变换 $\lambda \colon \mathbb{L}F \rightarrow F$
+    使得其诱导的同伦范畴之间的函子 $\operatorname{Ho} \mathbb{L}F \colon \operatorname{Ho} \mathcal{C} \rightarrow \operatorname{Ho} \mathcal{D}$ 
+    以及 $\delta \lambda \colon \delta \circ \mathbb{L}F=\gamma \circ \operatorname{Ho} \mathbb{L}F \rightarrow \delta \circ F$ 是
+    是 $F$ 沿着 $\gamma$ 的右 Kan 扩张, 也就是 $\operatorname{Ho} \mathbb{L}F$ 是 $F$ 的左全导出函子.
+
+    对偶地, $F$ 的{\bf 右导出函子}是一个同伦函子 $\mathbb{R}F$ 使得其诱导的同伦范畴之间的函子 
+    $\operatorname{Ho} \mathbb{R}F \colon \operatorname{Ho} \mathcal{C} \rightarrow \operatorname{Ho} \mathcal{D}$ 是 $F$ 的右全导出函子.
+\end{definition}
+
+这个定义实际上对带有弱等价的范畴都成立, 不过我们只考虑模型范畴的情况. 下面给出了模型范畴中, 导出函子的构造:
+
+\begin{theorem}[\cite[Theorem 2.2.8]{riehl2014categorical}]
+    设 $\mathcal{C}$ 和 $\mathcal{D}$ 是模型范畴, $Q$ 是 $\mathcal{C}$ 的余纤维性替换函子, $F\colon \mathcal{C} \rightarrow \mathcal{D}$ 保持余纤维性对象之间的弱等价. 
+    那么 $FQ$ 是 $F$ 的左导出函子.
+
+    对偶地, 设 $R$ 是 $\mathcal{C}$ 的纤维性替换函子, $F|\mathcal{C}_\mathrm{f}$ 保持弱等价, 那么 $RF$ 是 $F$ 的右导出函子.
+\end{theorem}
+\begin{proof}
+    我们有自然变换 $Fq \colon FQ \rightarrow F$, $FQ$ 诱导 $\operatorname{Ho} FQ \colon \operatorname{Ho} \mathcal{C} \rightarrow \operatorname{Ho} \mathcal{D}$.
+    现在 $\delta Fq$ 是从 $\delta FQ = \operatorname{Ho} FQ \circ \gamma$ 到 $\delta F$ 的自然变换. 我们要证明这个自然变换满足 Kan 扩张的泛性质.
+
+    现在设有函子 $G \colon \operatorname{Ho} \mathcal{C} \rightarrow \operatorname{Ho} \mathcal{D}$ 和自然变换 $\eta \colon G \gamma \rightarrow \delta F$.
+    假设有一个自然变换 $\alpha \colon G \rightarrow \operatorname{Ho} FQ$ 使得下面复合:
+    \[
+    G \gamma \xrightarrow{\alpha_\gamma} \operatorname{Ho} FQ \circ \gamma = \delta FQ \xrightarrow{\delta F q} \delta F
+    \]
+    是 $\eta \colon G\gamma \rightarrow \delta F$. 如果 $\delta Fq$ 可逆, 那么 $\alpha_\gamma$ 就唯一存在, 并且可以表示为 $(\delta Fq)^{-1} \circ \eta$.
+    同时由于 $\operatorname{Ho} \mathcal{C}$ 中的每个对象都是 $\mathcal{C}$ 中的对象经过 $\gamma$ 的作用得到, 这样 $\alpha$ 实际上也就唯一确定了.
+    为此只需要 $Fq$ 是 $\mathcal{D}$ 中的弱等价即可, 然而 $F$ 仅仅保持余纤维性对象之间的弱等价. 于是我们考虑:
+    \[
+    G \gamma Q \xrightarrow{\alpha_{\gamma Q}} \operatorname{Ho} FQ \circ \gamma Q = \delta F Q^2 \xrightarrow{\delta Fq_Q} \delta FQ
+    \]
+    令它等于 $\eta_Q \colon G \gamma Q \rightarrow \delta FQ$. 现在 $q_Q \colon Q^2 \rightarrow Q$ 是余纤维性对象之间的弱等价, 因此 $\delta F q_Q$ 是同构,
+    这样有
+    \[
+    \alpha_{\gamma Q} = (\delta F q_Q)^{-1} \circ \eta_Q
+    \]
+    现在我们唯一确定了 $\alpha_{\gamma Q}$. 注意到 $q \colon Q \rightarrow \mathbbm{1}$ 是弱等价构成的自然变换, 因此 $\gamma q \colon \gamma Q \rightarrow \gamma$ 是自然同构.
+    这样就确定了 $\alpha_\gamma$, 进而确定了 $\alpha \colon G \rightarrow \operatorname{Ho} FQ$.
+\end{proof}
+
 
 \printbibliography[heading=bibintoc, title=\ebibname]
 \end{document}
