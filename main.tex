@@ -151,7 +151,7 @@
     以及从 $Q$ 到 $\mathbbm{1}_\mathcal{C}$ 的自然变换 $QX \xrightarrow{q_X} X$,
     并且它由平凡纤维化组成. 我们称 $Q$ 为 $\mathcal{C}$ 的{\bf 余纤维性替换函子(Cofibrant replacement functor)}.
 
-    类似地, 把 $(\gamma, \delta)$ 作用在 $X \rightarrow 1$ 上可以得到{\bf 纤维性替换函子(Fibrant replacement functor)} $RX$ 和由平凡余纤维化组成的自然变换 $X \rightarrow RX$.
+    类似地, 把 $(\gamma, \delta)$ 作用在 $X \rightarrow 1$ 上可以得到{\bf 纤维性替换函子(Fibrant replacement functor)} $RX$ 和由平凡余纤维化组成的自然变换 $r \colon X \rightarrow RX$.
 \end{remark}
 
 
@@ -254,7 +254,7 @@
     这样又有提升 $H' \colon C \rightarrow A'$, 它满足所需的要求. 因此 $A \rightarrow B \rightarrow C$ 对任意平凡纤维化具有左提升性质.
 \end{proof}
 
-\begin{lemma}
+\begin{lemma}[Ken Brown]
     \label{KenBrown-lemma}
     设 $\mathcal{C}$ 是模型范畴, 范畴 $\mathcal{D}$ 带有一个弱等价子范畴. 
     设函子 $F \colon \mathcal{C} \rightarrow \mathcal{D}$ 把余纤维性对象之间的平凡余纤维化变成 $\mathcal{D}$ 中的弱等价.
@@ -262,11 +262,27 @@
     对偶地, 如果 $F$ 把纤维性对象之间的平凡纤维化变成 $\mathcal{D}$ 中的弱等价, 那么 $F$ 也把纤维性对象之间的弱等价都变成 $\mathcal{D}$ 中的弱等价.
 \end{lemma}
 \begin{proof}
-    直接参考 \cite[Lemma 1.1.12]{hovey2007model}. 没有什么疑点.
+    参考 \cite[Lemma 1.1.12]{hovey2007model}.
 
-    利用推出, 把余纤维性对象的余纤维性传递到余积的标准插入里是个技巧.
-    此证明把要证明的态射和已知结果的态射捆绑到一起, 然后函子映射后, 结果就能互相共享.
+    设 $f \colon A \rightarrow B$ 是余纤维性对象之间的弱等价. 然后把余积映射 $f \coprod \mathbbm{1}_B \colon A \coprod B \rightarrow B$ 分解为余纤维化 $q \colon A \coprod B \rightarrow C$ 复合平凡纤维化 $p \colon C \rightarrow B$.
+    同时我们有推出:
+    \[
+    \begin{tikzcd}
+        0 \ar[r] \ar[d] & A \ar[d, "i_1"] \\
+        B \ar[r, "i_2"'] & A \coprod B
+    \end{tikzcd}
+    \]
+    那么根据 $A,B$ 的余纤维性和 \ref{pushout-preserve-cofibration}, $i_1,~ i_2$ 都是余纤维化以及 $A \coprod B$ 是余纤维性对象, 进一步 $C$ 也是余纤维性对象.
+    然后注意到 $f = p \circ q \circ i_1,~ \mathbbm{1}_B = p \circ q \circ i_2$, 根据三选二性质可得 $q \circ i_1$ 和 $q \circ i_2$ 都是弱等价.
+    而 $q,~ i_1,~ i_2$ 都是余纤维化, 因此 $q \circ i_1,~ q \circ i_2$ 是余纤维性对象之间的平凡余纤维化. 
+
+    根据假设, $F(q \circ i_1)$ 和 $F(q \circ i_2)$ 是弱等价. 而 $F(\mathbbm{1}_B) = F(p) \circ F(q \circ i_2)$ 当然是弱等价, 因此根据三选二性质可知 $F(p)$ 是弱等价.
+    最后得到 $F(f) = F(p) \circ F(q \circ i_1)$ 是弱等价.
 \end{proof}
+\begin{remark}
+    利用推出, 把余纤维性对象的余纤维性传递到余积的标准插入里是个技巧, 另外从这里得到余纤维性对象的余积仍然是余纤维性对象.
+    此证明把要证明的态射和已知结果的态射捆绑到一起, 然后函子映射后, 结果就能互相共享.
+\end{remark}
 
 \subsection{例子}
 \begin{example}
@@ -462,14 +478,14 @@ X \times I \longrightarrow Y,\qquad \text{或者 } X \longrightarrow Y^I
 \begin{definition}
     假设 $\mathcal{C}$ 是模型范畴, 则对象 $X$ 的
     \begin{enumerate}
-        \item {\bf 柱对象}, 记作 $\mathrm{Cyl}(X)$, 由余对角态射 $\nabla = \mathbbm{1} \sqcup \mathbbm{1} \colon X \sqcup X \rightarrow X$ 的一个分解
+        \item {\bf 柱对象}, 记作 $\mathrm{Cyl}(X)$, 由余对角态射 $\nabla = \mathbbm{1} \coprod \mathbbm{1} \colon X \coprod X \rightarrow X$ 的一个分解
         \[
         \begin{tikzcd}
-            X \sqcup X \ar[rr, "\nabla"] \ar[rd, "i"'] & & X \\
+            X \coprod X \ar[rr, "\nabla"] \ar[rd, "i"'] & & X \\
             & \mathrm{Cyl}(X) \ar[ur, "p"'] &
         \end{tikzcd}
         \]
-        组成, 并且 $i = i_0 \sqcup i_1$ 需是余纤维化, $p$ 需是弱等价.
+        组成, 并且 $i = i_0 \coprod i_1$ 需是余纤维化, $p$ 需是弱等价.
 
         \item {\bf 路径对象}, 记作 $\mathrm{Path}(X)$, 由对角态射 $\Delta = \mathbbm{1} \times \mathbbm{1} \colon X \rightarrow X \times X$ 的一个分解
         \[
@@ -485,12 +501,12 @@ X \times I \longrightarrow Y,\qquad \text{或者 } X \longrightarrow Y^I
 柱对象不唯一, 但是有一个典型的柱对象由模型结构的分解函子给出, 其他所有柱对象都弱等价到这个典型的柱对象: 有交换图
 \[
 \begin{tikzcd}
-    X \sqcup X \ar[r, "\alpha(\nabla)"] \ar[d, "i"'] & X' \ar[d, "\beta(\nabla)"] \\
+    X \coprod X \ar[r, "\alpha(\nabla)"] \ar[d, "i"'] & X' \ar[d, "\beta(\nabla)"] \\
     \mathrm{Cyl}(X) \ar[r, "p"'] & X
 \end{tikzcd}
 \]
 再根据提升性质和三选二性质可以得到从 $\mathrm{Cyl}(X)$ 到 $X'$ 的弱等价. 
-在 Hurewicz 模型结构中, $X'$ 是 $X \times I$; $\alpha(\nabla) = i_0 \sqcup i_1$, 这里 $i_0(x) = (x,0),~ i_1(x) = (x,1)$; $\beta(\nabla)$ 就是标准投影.
+在 Hurewicz 模型结构中, $X'$ 是 $X \times I$; $\alpha(\nabla) = i_0 \coprod i_1$, 这里 $i_0(x) = (x,0),~ i_1(x) = (x,1)$; $\beta(\nabla)$ 就是标准投影.
 同时, 在这个模型结构中, 弱等价就是通常的同伦等价, 因此所有 $X$ 的柱对象都同伦等价于 $X \times I$.
 
 类似地, 路径对象也不唯一, 但是有一个典型的路径对象由模型结构的分解函子给出, 它弱等价到其他所有路径对象.
@@ -560,21 +576,21 @@ $X^I$ 同伦到所有 $X$ 的路径对象.
     $k$ 满足如下交换图:
     \[
     \begin{tikzcd}[column sep = 1.5cm]
-        A \sqcup A \ar[r, "i \circ (h \sqcup h)"] \ar[d, "j"] & B \times I \ar[d, "s"] \\
+        A \coprod A \ar[r, "i \circ (h \coprod h)"] \ar[d, "j"] & B \times I \ar[d, "s"] \\
         A \times I \ar[r, "ht"] \ar[ur, "k"] & B
     \end{tikzcd}
     \]
-    这里 $A \sqcup A \xrightarrow{j} A \times I\xrightarrow{t} A$ 是 $A$ 的典型柱对象, $B \sqcup B \xrightarrow{i} B \times I \xrightarrow{s} B$ 是 $B$ 的典型柱对象.
+    这里 $A \coprod A \xrightarrow{j} A \times I\xrightarrow{t} A$ 是 $A$ 的典型柱对象, $B \coprod B \xrightarrow{i} B \times I \xrightarrow{s} B$ 是 $B$ 的典型柱对象.
     也就是说我们只需要把 $h \times \mathbbm{1}$ 类比为模型范畴中的上述交换图的提升即可. 
-    对任意对象 $A$, 我们都可以做柱对象 $A \sqcup A \xrightarrow{j} A' \xrightarrow{t} A$, 这里 $j$ 是余纤维化;
-    以及对 $B$ 做柱对象 $B \sqcup B \xrightarrow{i} B' \xrightarrow{s} B$, 用 $A'$ 和 $B'$ 代替上面的 $A \times I$ 和 $B \times I$ 即可,
+    对任意对象 $A$, 我们都可以做柱对象 $A \coprod A \xrightarrow{j} A' \xrightarrow{t} A$, 这里 $j$ 是余纤维化;
+    以及对 $B$ 做柱对象 $B \coprod B \xrightarrow{i} B' \xrightarrow{s} B$, 用 $A'$ 和 $B'$ 代替上面的 $A \times I$ 和 $B \times I$ 即可,
     因为在这种情况下 $s$ 是平凡纤维化, 肯定有提升.
     
     但是对任意给定的左同伦 $H \colon B' \rightarrow X$, 它的出发对象 $B'$ 不一定是典型的, 这导致 $s$ 不一定是平凡纤维化.
     为此我们做下面论证, 说明当 $X$ 是纤维化对象时, 可以假设 $B'$ 是典型柱对象以及 $s$ 是平凡纤维化.
     我们需要从 $H \colon B' \rightarrow X$ 出发找到从典型柱对象出发的左同伦.
     那么利用模型范畴分解函子和三选二性质, 弱等价 $s$ 可以分解为平凡余纤维化 $B' \rightarrow B''$ 复合平凡纤维化 $B'' \xrightarrow{s'} B$.
-    两个余纤维化的复合得到 $B \sqcup B \rightarrow B''$ 也是余纤维化. 这样 $B''$ 也是 $B$ 的柱对象, 还是典型柱对象. 考虑 $X$ 是纤维性对象和下列交换图:
+    两个余纤维化的复合得到 $B \coprod B \rightarrow B''$ 也是余纤维化. 这样 $B''$ 也是 $B$ 的柱对象, 还是典型柱对象. 考虑 $X$ 是纤维性对象和下列交换图:
     \[
     \begin{tikzcd}
         B' \ar[r, "H"] \ar[d] & X \ar[d] \\
@@ -595,12 +611,12 @@ $X^I$ 同伦到所有 $X$ 的路径对象.
     设 $j_0$ 是复合 $B \xrightarrow{i_0} B' \rightarrow C$, 而 $j_1$ 是复合 $B \xrightarrow{i'_1} B'' \rightarrow C$;
     又设 $s$ 是柱对象 $B'$ 对应的弱等价, $s'$ 是柱对象 $B''$ 对应的弱等价. 
     那么 $s \circ i_1 = s' \circ i'_0 = \mathbbm{1}_B$, 因此可以定义 $t \colon C \rightarrow B$. 
-    容易验证 $t \circ j_0 = t \circ j_1 = \mathbbm{1}_B$, 因此 $B \sqcup B \xrightarrow{j_0 \sqcup j_1} C \xrightarrow{t} B$ 是余对角态射 $B \sqcup B \xrightarrow{\mathbbm{1} \sqcup \mathbbm{1}} B$ 的分解. 参考 \ref{KenBrown-lemma} 的证明, 利用 $B$ 是余纤维性对象可得 $B \rightarrow B \sqcup B$ 是余纤维化.
-    这样它和余纤维化 $B \sqcup B \rightarrow B'$ 的复合 $i_1 \colon B \rightarrow B'$ 就是余纤维化. 而 $s \circ i_1 = \mathbbm{1}$ 是弱等价, 因此 $i_1$ 是弱等价, 或者说平凡余纤维化.
+    容易验证 $t \circ j_0 = t \circ j_1 = \mathbbm{1}_B$, 因此 $B \coprod B \xrightarrow{j_0 \coprod j_1} C \xrightarrow{t} B$ 是余对角态射 $B \coprod B \xrightarrow{\mathbbm{1} \coprod \mathbbm{1}} B$ 的分解. 参考 \ref{KenBrown-lemma} 的证明, 利用 $B$ 是余纤维性对象可得 $B \rightarrow B \coprod B$ 是余纤维化.
+    这样它和余纤维化 $B \coprod B \rightarrow B'$ 的复合 $i_1 \colon B \rightarrow B'$ 就是余纤维化. 而 $s \circ i_1 = \mathbbm{1}$ 是弱等价, 因此 $i_1$ 是弱等价, 或者说平凡余纤维化.
     这样还是根据 \ref{pushout-preserve-cofibration}, $B'' \rightarrow C$ 也是平凡余纤维化, 它和 $t$ 的复合 $s'$ 是弱等价, 因此 $t$ 是弱等价.
 
     由于 $H \circ i_1 = g = H' \circ i'_0$, 因此从推出泛性质可得态射 $K \colon C \rightarrow X$. 容易验证 $K j_0 = f$ 以及 $K j_1 = h$.
-    $K$ 还不是左同伦, 但是我们可以把 $j_0 \sqcup j_1$ 分解为余纤维化和平凡纤维化的复合 $B \sqcup B \xrightarrow{j} C' \xrightarrow{t'} C$.
+    $K$ 还不是左同伦, 但是我们可以把 $j_0 \coprod j_1$ 分解为余纤维化和平凡纤维化的复合 $B \coprod B \xrightarrow{j} C' \xrightarrow{t'} C$.
     于是 $t \circ t'$ 是弱等价, 这样 $C'$ 就是 $B$ 的一个柱对象, 而 $Kt'$ 就是一个从 $f$ 到 $h$ 的左同伦.
 
     这个证明中 $C$ 起到了类似柱对象的效果. 直接构造合适的柱对象和左同伦比较困难, 就放低要求, 先造出满足这个柱对象形式的余对角态射的分解, 以及有左同伦形式的 $K$, 
@@ -618,15 +634,15 @@ $X^I$ 同伦到所有 $X$ 的路径对象.
     \end{tikzcd}
     \]
     可以得到态射 $f \colon B \rightarrow X$ 使得 $hf = f'$. 因此 $F$ 是满射, 并且不需要考虑同伦等价.
-    现在假设有 $hf \overset{l}{\sim} hg$, 以及从 $hf$ 到 $hg$ 的左同伦 $H \colon B' \rightarrow Y$, 这里 $B \sqcup B \xrightarrow{i = i_0 \sqcup i_1} B' \rightarrow B$.
+    现在假设有 $hf \overset{l}{\sim} hg$, 以及从 $hf$ 到 $hg$ 的左同伦 $H \colon B' \rightarrow Y$, 这里 $B \coprod B \xrightarrow{i = i_0 \coprod i_1} B' \rightarrow B$.
     那么从下列交换图
     \[
     \begin{tikzcd}
-        B \sqcup B \ar[r, "f \sqcup g"] \ar[d, "i"'] & X \ar[d, "h"'] \\
+        B \coprod B \ar[r, "f \coprod g"] \ar[d, "i"'] & X \ar[d, "h"'] \\
         B' \ar[r, "H"] & Y
     \end{tikzcd}
     \]
-    可以得到提升 $K \colon B' \rightarrow X$. 同时 $K i_0 = K i \circ I_1 = (f \sqcup g) \circ I_1 = f$, 这里 $I_1 \colon B \rightarrow B \sqcup B$ 是第一个因子的标准插入态射,
+    可以得到提升 $K \colon B' \rightarrow X$. 同时 $K i_0 = K i \circ I_1 = (f \coprod g) \circ I_1 = f$, 这里 $I_1 \colon B \rightarrow B \coprod B$ 是第一个因子的标准插入态射,
     类似地 $K i_1 = g$, 因此 $K$ 是从 $f$ 到 $g$ 的左同伦. $F$ 是单射.
 
     对于 $h$ 是纤维性对象之间的弱等价的情况. 我们构造一个范畴 $\mathcal{D}$, 它对象都是 $\mathcal{C}(B,X)/\overset{l}{\sim}$, 这里 $X$ 是 $\mathcal{C}$ 中的任意对象,
@@ -664,16 +680,51 @@ $X^I$ 同伦到所有 $X$ 的路径对象.
 这个定理作用在拓扑空间范畴的 Quillen 模型结构上就得到代数拓扑中的 Whitehead 定理 \cite[Theorem 8.4.3]{dieck2008algebraic}.
 作用在链复形范畴的投射模型结构上就得到投射消解的同伦唯一性, 作用在上链复形范畴的单射模型结构上就得到单射消解的同伦唯一性.
 \begin{proof}
-    参考 \cite[Proposition 1.2.8]{hovey2007model}. $\Rightarrow$ 的方向没有什么疑问.
+    参考 \cite[Proposition 1.2.8]{hovey2007model}.
 
-    $\Leftarrow$ 方向:
-    \begin{enumerate}
-        \item $C$ 为什么是双纤维性对象?
-        这是因为 $0 \rightarrow C$ 是余纤维化的复合 $0 \rightarrow A \xrightarrow{g} C$. 类似地, $C \rightarrow 1$ 是纤维化的复合 $C \xrightarrow{p} B \rightarrow 1$.
-        
-        \item 证明思路
-    \end{enumerate}
+    设 $f \colon A \rightarrow B$ 是双纤维性对象之间的弱等价. 那么根据 \ref{prop.1.2.5}, 当 $X$ 也是双纤维性对象时, 有双射
+    \[
+    f_* \colon \operatorname{Ho} \mathcal{C}(X,A) \rightarrow \operatorname{Ho} \mathcal{C}(X,B)
+    \]
+    取 $X = B$, 那么从 $\mathbbm{1}_B \in \operatorname{Ho} \mathcal{C}(B,B)$ 可以得到同伦意义下唯一的 $g \colon B \rightarrow A$ 使得 $fg \sim \mathbbm{1}_B$.
+    并且有 $fgf \sim f$, 于是取 $X = A$, 我们看到 $gf$ 和 $\mathbbm{1}_A$ 在 $f_*$ 下相等, 于是 $gf \sim \mathbbm{1}_A$. 因此 $f$ 是同伦等价.
+
+    反过来, 设 $f$ 是双纤维性对象 $A,B$ 之间的同伦等价. 把 $f$ 分解为 $A \xrightarrow{g} C \xrightarrow{p} B$, 这里 $g$ 是平凡余纤维化, $p$ 是纤维化.
+    于是 $C$ 是双纤维性对象, 这类似于 \ref{KenBrown-lemma} 的证明过程里面用到的技巧, 因为 $0 \rightarrow A$ 和 $g$ 都是余纤维化, 因此 $0 \rightarrow C$ 是余纤维化;
+    类似地纤维化 $p$ 和 $A \rightarrow 1$ 的复合得到纤维化 $C \rightarrow 1$. 这样 $g$ 是双纤维性对象之间的弱等价, 根据上面的另一个方向的结果, $g$ 是同伦等价. 
+    下面我们证明 $p$ 也是弱等价, 这样 $f = pg$ 是弱等价.
+
+    设 $f' \colon B \rightarrow A$ 是 $f$ 的同伦逆, $H\colon B' \rightarrow B$ 是从 $ff'$ 到 $\mathbbm{1}_B$ 的左同伦.
+    设 $i_0 \coprod i_1 \colon B \coprod B \rightarrow B'$ 是余纤维化, 则由于 $B$ 是余纤维性对象, $i_0,~ i_1$ 也是余纤维化. 这样如下交换图:
+    \[
+    \begin{tikzcd}
+        B \ar[r, "gf'"] \ar[d, "i_0"'] & C \ar[d, "p"'] \\
+        B' \ar[r, "H"] & B
+    \end{tikzcd}
+    \]
+    有提升 $H' \colon B' \rightarrow C$. 设 $q = H'i_1$, 于是 $H'$ 是从 $gf'$ 到 $q$ 的左同伦, 并且 $pq = \mathbbm{1}_B$.
+    这样 $q \sim gf'$, 进而 $qp \sim gf'p$. 而 $f'f = f'pg \sim \mathbbm{1}_A$, 设 $g' \colon C \rightarrow A$ 是 $g$ 的同伦逆, 那么 $f'p \sim g'$.
+    这样 $qp \sim \mathbbm{1}_C$.
+
+    $qp$ 是弱等价. 设 $K \colon C' \rightarrow C$ 是从 $\mathbbm{1}_C$ 到 $qp$ 的左同伦. 那么 $Ki_0 = \mathbbm{1}_C$ 是弱等价, 
+    而 $i_0 \colon C \rightarrow C'$ 是弱等价 (道理同 \ref{prop.1.2.5} (iii) 的证明里的相同部分), 这样 $K$ 就是弱等价, 进一步 $Ki_1 = qp$ 是弱等价.
+    现在交换图:
+    \[
+    \begin{tikzcd}
+        C \ar[r, "{\mathbbm{1}_C}"] \ar[d, "p"'] & C \ar[r, "{\mathbbm{1}_C}"] \ar[d, "qp"'] & C \ar[d, "p"'] \\
+        B \ar[r, "q"] & C \ar[r, "p"] & B
+    \end{tikzcd}
+    \]
+    说明 $p$ 是 $qp$ 的缩回, 因此 $p$ 也是弱等价. 这样就证明了 $f$ 是弱等价.
 \end{proof}
+\begin{remark}
+    从 $pgf' = ff' \sim \mathbbm{1}_B$ 可以看出 $gf'$ 至少包含了 $p$ 的同伦逆的信息, 但只从这个关系还不能得出 $gf'$ 就是 $p$ 的同伦逆.
+    因此需要从 $Hi_0 = pgf'$ 中, 通过提升来把 $p$ 的同伦逆信息给填入 $H' \colon B' \rightarrow C$ 中, 这样 $H'i_1$ 就是 $p$ 的同伦逆.
+    
+    从缩回性质可以从 $qp$ 的弱等价得到 $p$ 的弱等价. 而由于柱对象的 $i_0,i_1 \colon C \rightarrow \operatorname{Cyl}C$ 一定是弱等价, 
+    因此如果有从 $f$ 到 $g$ 的左同伦 $K \colon \operatorname{Cyl} C \rightarrow X$, 
+    并且比如 $f$ 是弱等价, 则可以得到 $K$ 进而 $g$ 也是弱等价. 这样我们就可以从 $qp \sim \mathbbm{1}_C$ 得到 $qp$ 的弱等价.
+\end{remark}
 
 \begin{corollary}
     \label{coro.1.2.9}
@@ -714,6 +765,7 @@ $\operatorname{Ho}\mathcal{C}_\mathrm{f},~ \operatorname{Ho}\mathcal{C}_\mathrm{
 
 \subsection{Kan 扩张}
 \subsubsection{定义}
+
 {\bf Kan 扩张}是范畴论中的一种万有构造, 反过来万有构造也可以用 Kan 扩张来表示. 
 给定一对函子 $K \colon \mathcal{C} \rightarrow \mathcal{D}, F \colon \mathcal{C} \rightarrow \mathcal{E}$, 通常不能期待 $F$ 能沿着 $K$ 扩展.
 \[
@@ -745,7 +797,21 @@ $\operatorname{Ho}\mathcal{C}_\mathrm{f},~ \operatorname{Ho}\mathcal{C}_\mathrm{
 \end{definition}
 
 \begin{remark}
-    根据泛性质, 或者米田引理, Kan 扩张在自然同构意义下唯一.
+    考虑以下两个从 $\mathcal{E}^\mathcal{D}$ 到集合范畴 $\mathbf{Set}$ 的函子:
+    \[
+    \mathcal{E}^\mathcal{C}(F, - \circ K),\qquad \mathcal{E}^\mathcal{D}(G,-)
+    \]
+    那么 $(\operatorname{Lan}_K F, \eta)$ 的泛性质等价于下面自然同构:
+    \begin{align*}
+        \mathcal{E}^\mathcal{D}(\operatorname{Lan}_K F, -) &\longrightarrow \mathcal{E}^\mathcal{C}(F, - \circ K) \\
+        (\operatorname{Lan}_K F \xrightarrow{\alpha} G) &\longmapsto \alpha_K \circ \eta
+    \end{align*}
+
+    对偶地, $(\operatorname{Ran}_K F, \epsilon)$ 的泛性质等价于下面自然同构:
+    \begin{align*}
+        \mathcal{E}^\mathcal{D}(-, \operatorname{Ran}_K F) &\longrightarrow \mathcal{E}^\mathcal{C}(- \circ K, F) \\
+        (G \xrightarrow{\alpha} \operatorname{Ran}_K F) &\longmapsto \epsilon \circ \alpha_K
+    \end{align*}
 \end{remark}
 
 \begin{example}
@@ -770,10 +836,202 @@ $\operatorname{Ho}\mathcal{C}_\mathrm{f},~ \operatorname{Ho}\mathcal{C}_\mathrm{
 \end{example}
 
 \subsubsection{Kan 扩张与极限}
+本小节给出 Kan 扩张与范畴极限的关系. 在此之前还是先给出范畴中的''积分''的概念.
+
+\begin{definition}[双自然变换]
+    设有范畴 $\mathcal{C}, \mathcal{D}$ 和双函子 $F,G \colon \mathcal{C}^\mathrm{op} \times \mathcal{C} \rightarrow \mathcal{D}$.
+    那么从 $F$ 到 $G$ 的双自然变换 $\alpha \colon F \rightarrow G$ 由一族 $\mathcal{D}$ 中的态射 $\alpha_c \colon F(c,c) \rightarrow G(c,c)$ 组成,
+    并且对每个 $\mathcal{C}$ 中的态射 $f \colon c \rightarrow c'$ 有六边形交换图:
+    \[
+    \begin{tikzcd}
+        & F(c,c) \ar[r, "\alpha_c"] & G(c,c) \ar[dr, "{G(\mathbbm{1}, f)}"] & \\
+        F(c',c) \ar[ur, "{F(f, \mathbbm{1})}"] \ar[dr, "{F(\mathbbm{1}, f)}"'] & & & G(c,c') \\
+        & F(c',c') \ar[r, "{\alpha_{c'}}"] & G(c',c') \ar[ur, "{G(f, \mathbbm{1})}"'] &
+    \end{tikzcd}
+    \]
+\end{definition}
+
+\begin{definition}
+    设 $\mathcal{C}, \mathcal{D}$ 是两个范畴, 二元函子 $S \colon \mathcal{C}^\mathrm{op} \times \mathcal{C} \rightarrow \mathcal{D}$ 的{\bf 积分(end)}是二元组 $(d, \alpha)$,
+    这里 $d$ 是 $\mathcal{D}$ 中的对象, $\alpha \colon d \rightarrow S$ 是双自然变换, 并且具有泛性质: 对任意 $\mathcal{D}$ 中的对象 $x$ 和双自然变换 $\beta \colon x \rightarrow S$,
+    存在唯一态射 $h \colon x \rightarrow d$ 使得对任意 $a \in \operatorname{Obj} \mathcal{C}$ 都有 $\beta_a = \alpha_a \circ h$, 我们使用下列记号:
+    \[
+    d = \int_c S(c,c)
+    \]
+
+    对偶地, $S$ 的{\bf 余积分(coend)}是二元组 $(d, \zeta)$, 这里 $d$ 是 $\mathcal{D}$ 中的对象, $\zeta \colon S \rightarrow d$ 是双自然变换, 并且具有泛性质:
+    对任意 $\mathcal{D}$ 中的对象 $y$ 和双自然变换 $\beta \colon S \rightarrow y$, 存在唯一态射 $h \colon d \rightarrow y$ 使得对任意 $a \in \operatorname{Obj} \mathcal{C}$ 都有
+    $\beta_a = h \circ \zeta_a$, 我们有记号:
+    \[
+    d = \int^c S(c,c)
+    \]
+\end{definition}
+
+根据双自然变换的定义, 我们知道每个满足性质的双自然变换 $\beta \colon x \rightarrow S$ 和 $\mathcal{C}$ 中的对象 $b,c$ 使得下图交换:
+\[
+\begin{tikzcd}
+    & S(b,b) \ar[dr, "{S(\mathbbm{1}, f)}"] & \\
+    x \ar[ur, "\beta_b"] \ar[dr, "\beta_c"'] & & S(b,c) \\
+    & S(c,c) \ar[ur, "{S(f, \mathbbm{1})}"'] &
+\end{tikzcd}
+\]
+于是我们可以构造范畴 $\mathcal{C}_\S$, 它的对象由 $(b,b),~ (c,c)$ 和 $(b,c)$ 组成, 这里 $b,c$ 是 $\mathcal{C}$ 中的对象, 并且有态射 $f \colon b \rightarrow c$;
+而它的态射, 除了单位态射外只有 $(\mathbbm{1},f) \colon (b,b) \rightarrow (b,c)$ 和 $(f, \mathbbm{1}) \colon (c,c) \rightarrow (b,c)$. 这样 $S$ 就成了从 $\mathcal{C}_\S$ 到 $X$ 的函子.
+根据范畴极限的定义, 有:
+
+\begin{proposition}
+    \label{end-by-limit}
+    对任意函子 $S \colon \mathcal{C}^\mathrm{op} \times \mathcal{C} \rightarrow X$, 有如下同构:
+    \[
+    \int_c S(c,c) \cong \varprojlim ( S \colon \mathcal{C}_\S \rightarrow X )
+    \]
+
+    对偶地, 构造范畴 $\mathcal{C}^\S$, 其对象也是由 $(b,b),~ (c,c)$ 和 $(c,b)$ 组成, 这里 $b,c$ 是 $\mathcal{C}$ 中的对象, 并且有态射 $f \colon b \rightarrow c$;
+    除了单位态射外, 只有 $(f, \mathbbm{1}) \colon (c,b) \rightarrow (b,b)$ 和 $(\mathbbm{1}, f) \colon (c,b) \rightarrow (c,c)$. 这样有
+    \[
+    \int^c S(c,c) \cong \varinjlim (S \colon \mathcal{C}^\S \rightarrow X)
+    \]
+\end{proposition}
+
+\begin{corollary}
+    \label{end-in-small-complete}
+    如果 $X$ 是小完备(或者小余完备), $\mathcal{C}$ 是小范畴, 那么每个函子 $S \colon \mathcal{C}^\mathrm{op} \times \mathcal{C} \rightarrow X$ 都有积分(或者余积分),
+\end{corollary}
+
+\begin{example}
+    设 $\Delta \colon \mathbf{\Delta} \rightarrow \mathbf{Top}$ 是把标准单形变成拓扑标准单行的函子, $S \colon \mathbf{\Delta}^\mathrm{op} \rightarrow \mathbf{Set}$ 是单纯集.
+    那么考虑函子 $(\mathbf{n}, \mathbf{m}) \mapsto S\mathbf{n} \cdot \Delta\mathbf{m}$, 这里 $\cdot$ 表示每个因子都一样的不交并, 也就是说
+    \[
+    S\mathbf{n} \cdot \Delta\mathbf{m} = \coprod_{S\mathbf{n}} \Delta\mathbf{m}
+    \]
+    赋予和拓扑, 那么我们得到一个函子 $\mathbf{\Delta}^\mathrm{op} \times \mathbf{\Delta} \rightarrow \mathbf{Top}$. 这个函子的余积分称为单纯集 $S$ 的{\bf 几何实现}.
+\end{example}
+
+另一个例子就是 Kan 扩张:
+\begin{theorem}
+    \label{Kan-Extension-as-Coend}
+    当 $\mathcal{C}$ 是小范畴, $\mathcal{D}$ 是局部小范畴(也就是本文通常所说的范畴), 并且 $\mathcal{E}$ 余完备. 
+    那么任意函子 $F \colon \mathcal{C} \rightarrow \mathcal{E}$ 沿着任意函子 $K \colon \mathcal{C} \rightarrow \mathcal{D}$ 的左 Kan 扩张可以表示为在 
+    $d \in \operatorname{Obj}\mathcal{D}$ 的余积分:
+    \[
+    \operatorname{Lan}_K F(d) = \int^{c \in \mathcal{C}} \mathcal{D}(Kc, d) \cdot Fc
+    \]
+    
+    并且万有自然变换 $\eta \colon F \rightarrow (\operatorname{Lan}_K F)K$ 可以表示为, 在 $n \in \operatorname{Obj}\mathcal{C}$ 处是标准插入 $i$ 与余积分的标准态射 $\zeta$ 的复合:
+    \[
+    \begin{tikzcd}
+        Fn \ar[r, "i"] \ar[rd, "\eta_n"] & \mathcal{D}(Kn, Kn) \cdot Fn \ar[d, "\zeta_n"] \\
+        & \int^{c \in \mathcal{C}} \mathcal{D}(Kc, Kn) \cdot Fc = (\operatorname{Lan}_K F)(Kn)
+    \end{tikzcd}
+    \]
+
+    对偶地, 如果 $\mathcal{E}$ 完备, 那么 $F$ 沿着 $K$ 的右 Kan 扩张可以表示为在 $d \in \operatorname{Obj} \mathcal{D}$ 的积分:
+    \[
+    \operatorname{Ran}_K F(d) = \int_{c \in \mathcal{C}} F(c)^{\mathcal{D}(Kc,d)}
+    \]
+    这里指数符号表示范畴积, 也就是说 $F(c)^{\mathcal{D}(Kc,d)} = \prod_{\mathcal{D}(Kc,d)} F(c)$. 
+    
+    同样地, 万有自然变换 $\epsilon \colon (\operatorname{Ran}_K F) K \rightarrow F$ 可以表示为积分的标准态射 $\alpha$ 和标准投射 $p$ 的复合:
+    \[
+    \begin{tikzcd}
+        (\operatorname{Ran}_K F)(Kn) = \int_{c \in \mathcal{C}} F(c)^{\mathcal{D}(Kc,Kn)} \ar[r, "\alpha_n"] \ar[rd, "\epsilon_n"] & F(n)^{\mathcal{D}(Kn,Kn)} \ar[d, "p"] \\
+        & Fn
+    \end{tikzcd}
+    \]
+    \end{theorem}
+证明参见 \cite[Chap.X, Sec.4, Th.1]{mac2013categories}.
 
 \subsubsection{逐点 Kan 扩张和绝对 Kan 扩张}
+首先我们引入逗号范畴的概念:
+
+\begin{definition}
+    设有三个范畴 $\mathcal{C}, \mathcal{D}, \mathcal{E}$, 两个函子 $F \colon \mathcal{C} \rightarrow \mathcal{E}$ 和 $G \colon \mathcal{D} \rightarrow \mathcal{E}$.
+    则逗号范畴 $(F \downarrow G)$, 也记作 $(F,G)$ 的对象是三元组 $(x,y,f)$, 其中 $x \in \operatorname{Obj} \mathcal{C}, y \in \operatorname{Obj} \mathcal{D}$,
+    $f \colon F(x) \rightarrow G(y)$. 两个三元组 $(x,y,f)$ 和 $(x',y',f')$ 之间的态射是二元组 $(k,h)$, 这里 $k \colon x \rightarrow x',  h\colon y \rightarrow y'$
+    并且下图交换:
+    \[
+    \begin{tikzcd}
+        F(x) \ar[r, "Fk"] \ar[d, "f"'] & F(x') \ar[d, "f'"] \\
+        G(y) \ar[r, "Gh"'] & G(y')
+    \end{tikzcd}
+    \]
+    两个态射 $(k,h)$ 和 $(k', h')$ 的复合自然是 $(k' \circ k, h' \circ h)$.
+\end{definition}
+上述是逗号范畴的一般定义. 假设 $\mathcal{C} = \{1\}$ 只有一个成员, 又设 $F(1) = b$. 那么逗号范畴 $(F\downarrow G)$ 实际上变成了对象为二元组 $(y,f)$, 其中 $y \in \operatorname{Obj} \mathcal{D}$
+以及 $f \colon b \rightarrow G(y)$, 而 $(y,f)$ 和 $(y',f')$ 之间的态射是 $h \colon y \rightarrow y'$ 使得下图交换:
+\[
+\begin{tikzcd}
+    & b \ar[dl, "f"'] \ar[dr, "f'"] & \\
+    G(y) \ar[rr, "Gh"'] & & G(y')
+\end{tikzcd}
+\]
+这种逗号范畴我们记作 $(b \downarrow G)$. 特别地, 如果 $G = \mathbbm{1}_\mathcal{D}$, 那么逗号范畴就记作 $(b \downarrow \mathcal{D})$.
+
+类似地, 假设 $\mathcal{D} = \{ 1 \}$ 只有一个成员, 设 $G(1) = c$. 那么有逗号范畴 $(F \downarrow c)$, 其对象是二元组 $(x,f)$, 这里 $x \in \operatorname{Obj} \mathcal{C}$
+以及 $f \colon F(x) \rightarrow c$. 从 $(x,f)$ 到 $(x',f')$ 的态射是 $k \colon x \rightarrow x'$ 并且 $f' \circ Fk = f$.
+以及当 $F = \mathbbm{1}_\mathcal{C}$ 时, 有逗号范畴 $(\mathcal{C} \downarrow c)$.
+
+\begin{definition}
+    设 $\mathcal{C}, \mathcal{D}, \mathcal{E}$ 是范畴, $K \colon \mathcal{C} \rightarrow \mathcal{D}$ 和 $F \colon \mathcal{C} \rightarrow \mathcal{E}$ 是函子,
+    $(\operatorname{Lan}_K F, \eta)$ (或者 $(\operatorname{Ran}_K F, \eta)$) 是左 Kan 扩张 (右 Kan 扩张). 
+    则函子 $L \colon \mathcal{E} \rightarrow \mathcal{F}$ {\bf 保持} $(\operatorname{Lan}_K F, \eta)$ (或者 $(\operatorname{Ran}_K F, \eta)$) 指的是复合
+    $(L \circ \operatorname{Lan}_K F, L\eta)$ 是 $LF$ 沿着 $K$ 的左 Kan 扩张 (右 Kan 扩张).
+
+    一个 Kan 扩张如果被每个可表函子 $\mathcal{E}(e,-)$ 保持, 那么称其为{\bf 逐点} Kan 扩张; 如果被任意函子保持, 则称其为{\bf 绝对} Kan 扩张.
+\end{definition}
+
+\begin{proposition}
+    \label{adjoint-functor-preserve-kan-extension}
+    左伴随保持左 Kan 扩张. 对偶地, 右伴随保持右 Kan 扩张.
+\end{proposition}
+\begin{proof}
+    参见 \cite[Ch.X, Sec.5, Th.1]{mac2013categories}. 大致思路如下: 
+    设 $L \colon \mathcal{E} \rightarrow \mathcal{F}$ 有右伴随 $R \colon \mathcal{F} \rightarrow \mathcal{E}$.
+    那么从伴随的定义得到双射:
+    \[
+    \operatorname{Nat}(LA, B) \cong \operatorname{Nat}(A,RB)
+    \]
+    这里 $A \colon \mathcal{D} \rightarrow \mathcal{E}$ 和 $B \colon \mathcal{D} \rightarrow \mathcal{F}$ 都是函子. 
+    然后结合 Kan 扩张定义, 设 $A = \operatorname{Lan}_K F$ 可得结果.
+\end{proof}
+
+\begin{theorem}
+    \label{pointwise-kan-extension-as-limit}
+    $F$ 沿着 $K$ 有逐点右 Kan 扩张当且仅当它可以表示为如下极限:
+    \[
+    \operatorname{Ran}_K F(d) = \varprojlim \left( (d \downarrow K) \rightarrow \mathcal{C} \xrightarrow{F} \mathcal{E} \right)
+    \]
+    对偶地, $F$ 沿着 $K$ 有逐点左 Kan 扩张当且仅当它可以表示为如下余极限:
+    \[
+    \operatorname{Lan}_K F(d) = \varinjlim \left( (K \downarrow d) \rightarrow \mathcal{C} \xrightarrow{F} \mathcal{E} \right)
+    \]
+\end{theorem}
+\begin{proof}
+    参见 \cite[Ch.X, Sec.5, Th.3]{mac2013categories}.
+\end{proof}
 
 \subsubsection{其他概念与 Kan 扩张的关系}
+Kan 扩张可以表示范畴论中其他基础概念:
+
+\begin{theorem}
+\label{limit-as-kan-extension}
+    函子 $F \colon \mathcal{C} \rightarrow \mathcal{E}$ 有余极限当且仅当它沿着唯一的函子 $K \colon \mathcal{C} \rightarrow \mathbf{1}$ 的左 Kan 扩张存在,
+    此时 $\varinjlim F$ 就是 $\operatorname{Lan}_K F$ 在 $\mathbf{1}$ 的唯一对象上的值.
+
+    对偶地, $F$ 沿着 $K$ 的右 Kan 扩张给出 $F$ 的极限.
+\end{theorem}
+\begin{proof}
+    参见 \cite[Ch.X, Sec.7, Th.1]{mac2013categories}.
+\end{proof}
+
+\begin{theorem}[伴随函子存在性]
+\label{adjoint-existence-formal-criteria}
+    函子 $G \colon \mathcal{A} \rightarrow \mathcal{B}$ 有右伴随当且仅当左 Kan 扩张 $F = \operatorname{Lan}_G \mathbbm{1}_\mathcal{A} \colon \mathcal{B} \rightarrow \mathcal{A}$ 存在,
+    并且被 $G$ 保持; 此时 $F$ 就是 $G$ 的右伴随, Kan 扩张的万有自然变换 $\eta \colon \mathbbm{1}_A \rightarrow GF$ 就是伴随的单位自然变换.
+\end{theorem}
+\begin{proof}
+    参见 \cite[Ch.X, Sec.7, Th.2]{mac2013categories}
+\end{proof}
 
 \subsection{导出函子}
 两个模型范畴之间的函子很多时候并不保持弱等价, 这使得它们无法诱导局部化范畴, 或者说同伦范畴之间的函子. 为此我们需要一个最佳的同伦逼近, 这就是所谓的导出函子:
@@ -802,13 +1060,15 @@ $\operatorname{Ho}\mathcal{C}_\mathrm{f},~ \operatorname{Ho}\mathcal{C}_\mathrm{
 
 这个定义实际上对带有弱等价的范畴都成立, 不过我们只考虑模型范畴的情况. 下面给出了模型范畴中, 导出函子的构造:
 
-\begin{theorem}[\cite[Theorem 2.2.8]{riehl2014categorical}]
-    设 $\mathcal{C}$ 和 $\mathcal{D}$ 是模型范畴, $Q$ 是 $\mathcal{C}$ 的余纤维性替换函子, $F\colon \mathcal{C} \rightarrow \mathcal{D}$ 保持余纤维性对象之间的弱等价. 
-    那么 $FQ$ 是 $F$ 的左导出函子.
+\begin{theorem}
+    设 $\mathcal{C}$ 和 $\mathcal{D}$ 是模型范畴, $Q,q$ 是 $\mathcal{C}$ 的余纤维性替换函子和相应的自然变换, $F\colon \mathcal{C} \rightarrow \mathcal{D}$ 保持余纤维性对象之间的弱等价. 
+    那么 $FQ$ 和 $Fq \colon FQ \rightarrow F$ 构成 $F$ 的左导出函子 $\mathbb{L}F$.
 
-    对偶地, 设 $R$ 是 $\mathcal{C}$ 的纤维性替换函子, $F|\mathcal{C}_\mathrm{f}$ 保持弱等价, 那么 $RF$ 是 $F$ 的右导出函子.
+    对偶地, 设 $R,r$ 是 $\mathcal{C}$ 的纤维性替换函子和相应的自然变换, $F|\mathcal{C}_\mathrm{f}$ 保持弱等价, 
+    那么 $FR$ 和 $Fr \colon F \rightarrow FR$ 构成 $F$ 的右导出函子 $\mathbb{R}F$.
 \end{theorem}
 \begin{proof}
+    参见 \cite[Theorem 2.2.8]{riehl2014categorical}.
     我们有自然变换 $Fq \colon FQ \rightarrow F$, $FQ$ 诱导 $\operatorname{Ho} FQ \colon \operatorname{Ho} \mathcal{C} \rightarrow \operatorname{Ho} \mathcal{D}$.
     现在 $\delta Fq$ 是从 $\delta FQ = \operatorname{Ho} FQ \circ \gamma$ 到 $\delta F$ 的自然变换. 我们要证明这个自然变换满足 Kan 扩张的泛性质.
 
@@ -831,6 +1091,62 @@ $\operatorname{Ho}\mathcal{C}_\mathrm{f},~ \operatorname{Ho}\mathcal{C}_\mathrm{
     现在我们唯一确定了 $\alpha_{\gamma Q}$. 注意到 $q \colon Q \rightarrow \mathbbm{1}$ 是弱等价构成的自然变换, 因此 $\gamma q \colon \gamma Q \rightarrow \gamma$ 是自然同构.
     这样就确定了 $\alpha_\gamma$, 进而确定了 $\alpha \colon G \rightarrow \operatorname{Ho} FQ$.
 \end{proof}
+
+\begin{proposition}
+    设 $\mathcal{C}$ 和 $\mathcal{D}$ 是模型范畴, $Q$ 是 $\mathcal{C}$ 的余纤维性替换函子, $F\colon \mathcal{C} \rightarrow \mathcal{D}$ 保持余纤维性对象之间的弱等价.
+    则左全导出函子 $\mathbf{L}F$ 是绝对右 Kan 扩张.
+
+    对偶地, 如果 $F$ 保持纤维性对象之间的弱等价, 则右全导出函子 $\mathbf{R}F$ 是绝对左 Kan 扩张.
+\end{proposition}
+\begin{proof}
+    设 $\mathcal{C}, \mathcal{D}$ 是模型范畴, $F \colon \mathcal{C} \rightarrow \mathcal{D}$ 有左全导出函子 $\mathbf{L}F \colon \operatorname{Ho} \mathcal{C} \rightarrow \operatorname{Ho} \mathcal{D}$,
+    而 $H \colon \operatorname{Ho}\mathcal{D} \rightarrow \mathcal{E}$ 是任意函子. 我们要证明 $(H \circ \mathbf{L}F, H\delta Fq)$ 是 $H\delta F$ 沿着 $\gamma$ 的右 Kan 扩张: 
+    注意 $H \delta Fq \colon H \circ \mathbf{L}F \circ \gamma \rightarrow H\delta F$
+    \[
+    \begin{tikzcd}
+        \mathcal{C} \ar[r, "F"] \ar[d, "\gamma"'] & \mathcal{D} \ar[d, "\delta"] & \\
+        \operatorname{Ho} \mathcal{C} \ar[r, "{\mathbf{L}F}"'] & \operatorname{Ho} \mathcal{D} \ar[r, "H"'] & \mathcal{E}
+    \end{tikzcd}
+    \]
+    设有函子 $G \colon \operatorname{Ho} \mathcal{C} \rightarrow \mathcal{E}$ 和自然变换 $\alpha \colon G\gamma \rightarrow H \delta F$.
+
+    那么对任意 $\operatorname{Ho} \mathcal{C}$ 中的对象 $a$, 同时也是 $\mathcal{C}$ 中的对象, 从自然变换 $q \colon Q \rightarrow \mathbbm{1}_\mathcal{C}$ 可以得到 $\mathcal{C}$ 中的态射
+    $q_a \colon Qa \rightarrow a$. 于是根据自然变换 $\alpha$ 可以得到:
+    \[
+    \begin{tikzcd}
+        G\gamma Qa \ar[r, "{\alpha_{Qa}}"] \ar[d, "G\gamma q_a"'] & H \delta F Qa \ar[d, "H\delta F q_a"] \\
+        G \gamma a \ar[r, "\alpha_a"'] & H\delta Fa
+    \end{tikzcd}
+    \]
+    而 $\gamma q_a$ 是 $\operatorname{Ho} \mathcal{C}$ 中的同构, 于是 $G \gamma q_a$ 可逆, 这样我们就得到了一簇 $\mathcal{E}$ 中的态射:
+    \[
+    \eta_a = \alpha_{Qa} \circ \big( G \gamma q_a \big)^{-1} \colon G(a) \longrightarrow H \delta FQ(a) =  H \circ \mathbf{L}F(a)
+    \]
+    注意 $\gamma(a) = a$. 可以验证这簇态射满足自然变换 $\eta \colon G \rightarrow H \circ \mathbf{L}F$ 的性质, 并且有 $\alpha = H\delta Fq \circ \eta_\gamma$. 下面只要再证明 $\eta$ 的唯一性就能证明 $H \circ \mathbf{L}F$ 是右 Kan 扩张了.
+
+    假设有 $\alpha = H \delta Fq \circ \beta_\gamma$, 这里 $\beta \colon G \rightarrow H \circ \mathbf{L} F = H\delta FQ$. 
+    那么对 $\mathcal{C}$ 中任意余纤维性对象 $a$, $q_a \colon Qa \rightarrow a$ 就是纤维性对象之间的弱等价, 于是 $H\delta Fq_a$ 是同构, 这样从
+    \[
+    \alpha_a = H\delta Fq_a \circ \eta_a = H \delta F q_a \circ \beta_a
+    \]
+    就能得到 $\eta$ 和 $\beta$ 在 $\gamma(\mathcal{C}_\mathrm{c})$ 上相同. 然而对任意 $\mathcal{C}$ 中的对象 $a$, 都存在一个余纤维性对象 $Qa$ 和弱等价 $q_a \colon Qa \rightarrow a$, 
+    这样就有 $\operatorname{Ho} \mathcal{C}$ 中的同构 $\gamma q_a \colon Qa \rightarrow a$, 因此 $\eta = \beta$.
+\end{proof}
+
+\begin{corollary}
+    设 $\mathcal{C}, \mathcal{D},\mathcal{F}$ 是模型范畴, $F \colon \mathcal{C} \rightarrow \mathcal{D}$ 和 $G \colon \mathcal{D} \rightarrow \mathcal{F}$ 是保持余纤维性对象之间弱等价的函子,
+    那么有 $\mathbf{L}G \circ \mathbf{L}F \cong \mathbf{L}(G \circ F)$, 以及存在弱等价构成的从 $\mathbb{L}(G \circ F)$ 到 $\mathbb{L}G \circ \mathbb{L}F$ 的自然变换, 反过来也是.
+
+    对偶地, 如果 $F,G$ 是保持纤维性对象之间弱等价的函子, 那么 $\mathbf{R}G \circ \mathbf{R}F \cong \mathbf{R}(G \circ F)$, 以及存在弱等价构成的从 $\mathbb{R}(G \circ F)$ 到 $\mathbb{R}G \circ \mathbb{R}F$ 的自然变换, 反过来也是.
+\end{corollary}
+
+\subsection{Quillen 伴随}
+\begin{definition}
+    设 $\mathcal{C},\mathcal{D}$ 是模型范畴, $F \colon \mathcal{C} \leftrightarrows \mathcal{D} \colon G$ 是一对伴随函子.
+    如果 $F$ 保持余纤维性对象之间的弱等价, 那么 $F$ 称为{\bf 左 Quillen 函子}; 如果 $G$ 保持纤维性对象之间的弱等价, 那么 $G$ 称为{\bf 右 Quillen 函子};
+    如果这两者都成立, 则 $(F,G)$ 称为{\bf Quillen 伴随}.
+\end{definition}
+根据 Ken Brown 引理 \ref{KenBrown-lemma}, 如果 $F$ 保持余纤维化和平凡余纤维化, 那么 $F$ 就是左 Quillen 函子; 对偶地 $G$ 保持纤维化和平凡纤维化, 那么 $G$ 就是右 Quillen 函子.
 
 
 \printbibliography[heading=bibintoc, title=\ebibname]
