@@ -1061,10 +1061,12 @@ Kan 扩张可以表示范畴论中其他基础概念:
 这个定义实际上对带有弱等价的范畴都成立, 不过我们只考虑模型范畴的情况. 下面给出了模型范畴中, 导出函子的构造:
 
 \begin{theorem}
-    设 $\mathcal{C}$ 和 $\mathcal{D}$ 是模型范畴, $Q,q$ 是 $\mathcal{C}$ 的余纤维性替换函子和相应的自然变换, $F\colon \mathcal{C} \rightarrow \mathcal{D}$ 保持余纤维性对象之间的弱等价. 
+\label{derived-functor-as-composition-replacement}
+    设 $\mathcal{C}$ 和 $\mathcal{D}$ 是模型范畴, $Q,q$ 是 $\mathcal{C}$ 的余纤维性替换函子和相应的自然变换, 
+    $F\colon \mathcal{C} \rightarrow \mathcal{D}$ 保持余纤维性对象之间的弱等价. 
     那么 $FQ$ 和 $Fq \colon FQ \rightarrow F$ 构成 $F$ 的左导出函子 $\mathbb{L}F$.
 
-    对偶地, 设 $R,r$ 是 $\mathcal{C}$ 的纤维性替换函子和相应的自然变换, $F|\mathcal{C}_\mathrm{f}$ 保持弱等价, 
+    对偶地, 设 $R,r$ 是 $\mathcal{C}$ 的纤维性替换函子和相应的自然变换, $F$ 保持纤维性对象之间的弱等价, 
     那么 $FR$ 和 $Fr \colon F \rightarrow FR$ 构成 $F$ 的右导出函子 $\mathbb{R}F$.
 \end{theorem}
 \begin{proof}
@@ -1092,8 +1094,24 @@ Kan 扩张可以表示范畴论中其他基础概念:
     这样就确定了 $\alpha_\gamma$, 进而确定了 $\alpha \colon G \rightarrow \operatorname{Ho} FQ$.
 \end{proof}
 
+\begin{example}
+    在上链复形 $\operatorname{Coch}(R)$ 的单射模型结构中, 纤维性对象(双纤维性对象)是由单射模构成的下有界链复形. 
+    根据 Whitehead 定理 \ref{Whitehead-theorem}, 纤维性对象之间的弱等价就是链同伦等价.
+    而加性函子 $F \colon \mathbf{Mod}_R \rightarrow \mathbf{Mod}_S$ 所定义的相应上链复形范畴之间的函子 $F^\bullet$ 显然保持链同伦, 因此就保持纤维性对象之间的弱等价, 
+    这样应用上面的定理 $F^\bullet$ 具有右导出函子. 下列复合
+    \[
+    \mathbf{Mod}_R \longrightarrow \operatorname{Coch}(R) \xrightarrow{\mathbb{R}F^\bullet} \operatorname{Coch}(S) \xrightarrow{H^i} \mathbf{Mod}_S
+    \]
+    这里 $H^i$ 表示上链复形的第 $i$-阶上同调, 这个复合就是经典同调代数中 $F$ 的第 $i$ 阶右导出函子 $R^iF$ 的定义. 
+    根据下面的推论, 导出函子之间存在弱等价构成的自然变换, 因此右导出函子在同构意义下唯一.
+    同样的推论可以说明 $F_\bullet$, 进而 $F$ 也具有左导出函子.
+
+    而经典同调代数之所以要求 $F$ 是左正合或者右正合函子, 是为了能从短正合列构造长正合列.
+\end{example}
+
 \begin{proposition}
-    设 $\mathcal{C}$ 和 $\mathcal{D}$ 是模型范畴, $Q$ 是 $\mathcal{C}$ 的余纤维性替换函子, $F\colon \mathcal{C} \rightarrow \mathcal{D}$ 保持余纤维性对象之间的弱等价.
+    设 $\mathcal{C}$ 和 $\mathcal{D}$ 是模型范畴, $Q$ 是 $\mathcal{C}$ 的余纤维性替换函子, 
+    $F\colon \mathcal{C} \rightarrow \mathcal{D}$ 保持余纤维性对象之间的弱等价.
     则左全导出函子 $\mathbf{L}F$ 是绝对右 Kan 扩张.
 
     对偶地, 如果 $F$ 保持纤维性对象之间的弱等价, 则右全导出函子 $\mathbf{R}F$ 是绝对左 Kan 扩张.
@@ -1142,11 +1160,194 @@ Kan 扩张可以表示范畴论中其他基础概念:
 
 \subsection{Quillen 伴随}
 \begin{definition}
-    设 $\mathcal{C},\mathcal{D}$ 是模型范畴, $F \colon \mathcal{C} \leftrightarrows \mathcal{D} \colon G$ 是一对伴随函子.
-    如果 $F$ 保持余纤维性对象之间的弱等价, 那么 $F$ 称为{\bf 左 Quillen 函子}; 如果 $G$ 保持纤维性对象之间的弱等价, 那么 $G$ 称为{\bf 右 Quillen 函子};
+    设 $\mathcal{C},\mathcal{D}$ 是模型范畴, $(F,G) \colon \mathcal{C} \leftrightarrows \mathcal{D}$ 是一对伴随函子.
+    如果 $F$ 保持余纤维化和平凡余纤维化, 那么 $F$ 称为{\bf 左 Quillen 函子}; 如果 $G$ 保持纤维化和平凡纤维化, 那么 $G$ 称为{\bf 右 Quillen 函子};
     如果这两者都成立, 则 $(F,G)$ 称为{\bf Quillen 伴随}.
 \end{definition}
-根据 Ken Brown 引理 \ref{KenBrown-lemma}, 如果 $F$ 保持余纤维化和平凡余纤维化, 那么 $F$ 就是左 Quillen 函子; 对偶地 $G$ 保持纤维化和平凡纤维化, 那么 $G$ 就是右 Quillen 函子.
+\begin{remark}
+    根据 Ken Brown 引理 \ref{KenBrown-lemma}, 左 Quillen 函子保持余纤维性对象之间的弱等价; 右 Quillen 函子保持纤维性对象之间的弱等价.
+\end{remark}
+
+
+\begin{lemma}
+    \label{left-preserve-cof-tricof-equi-right}
+    $\mathcal{C}, \mathcal{D}$ 和 $F,G$ 如上面条件. 则 $F$ 保持余纤维化 (或平凡余纤维化)当且仅当 $G$ 保持平凡纤维化 (或纤维化).
+\end{lemma}
+因此 Quillen 伴随只需要单边的条件即可.
+\begin{proof}
+    使用伴随函子的定义和引理 \ref{lemma.1.1.10} 可以得到结果.
+\end{proof}
+
+\begin{proposition}
+    \label{derived-funtor-of-Quillenadjoint-is-adjoint}
+    设 $\mathcal{C},\mathcal{D}$ 是模型范畴, $(F,G) \colon \mathcal{C} \leftrightarrows \mathcal{D}$ 是 Quillen 伴随.
+    那么它们的全导出函子 $(\mathbf{L}F, \mathbf{R}G)$ 是 $\operatorname{Ho} \mathcal{C}$ 和 $\operatorname{Ho} \mathcal{D}$ 之间的伴随函子, 称为导出伴随.
+\end{proposition}
+\begin{proof}
+    参见 \cite[Lemma 1.3.10]{hovey2007model}.
+    设 $X \in \operatorname{Obj} \operatorname{Ho} \mathcal{C} = \operatorname{Obj} \mathcal{C},~ Y \in \operatorname{Obj} \operatorname{Ho} \mathcal{D} = \operatorname{Obj} \mathcal{D}$. 
+    根据 \ref{derived-functor-as-composition-replacement} 和弱等价构成的自然变换 $q \colon Q \rightarrow \mathbbm{1}_\mathcal{C},~ r \colon \mathbbm{1}_\mathcal{D} \rightarrow R$,
+    并且 $Q,R$ 保持弱等价, 因此
+    \begin{align*}
+    &\operatorname{Ho} \mathcal{D}( \mathbf{L}F(X), Y) \cong \operatorname{Ho} \mathcal{D}(FQX, RY) 
+    \cong \operatorname{Ho} \mathcal{D}(FQRX, QRY) \cong \mathcal{D}(FQRX, QRY)/\sim, \\
+    &\operatorname{Ho} \mathcal{C}( X, \mathbf{R}G(Y)) \cong \operatorname{Ho} \mathcal{C}(QX, GRY) 
+    \cong \operatorname{Ho} \mathcal{C}(QRX, GQRY) \cong \mathcal{C}(QRX, GQRY)/\sim
+    \end{align*}
+    于是我们只需要证明同构 $\varphi \colon \mathcal{D}_\mathrm{cf}(FX,Y) \cong \mathcal{C}_\mathrm{cf}(X,GY)$ 与同伦关系相容即可, 自然性可以直接从 $\varphi$ 的自然性得到.
+
+    假设 $f,g \colon FX \rightarrow Y$ 同伦, 则存在从 $f$ 到 $g$ 的右同伦 $K \colon FX \rightarrow \operatorname{Path} Y$.
+    $\operatorname{Path} Y$ 是纤维性对象, 由于 $G$ 是右伴随因此保持乘积, 同时因为是右 Quillen 函子故保持纤维性对象之间的弱等价, 
+    这样 $G(\operatorname{Path} Y)$ 是 $\mathcal{C}$ 中 $GY$ 的路径对象. 
+    然后由伴随函子的性质可以得到 $\varphi K \colon X \rightarrow G(\operatorname{Path}Y)$ 是从 $\varphi f$ 到 $\varphi g$ 的右同伦, 这样 $\varphi$ 与同伦关系相容.
+
+    反过来, 如果 $\varphi f, \varphi g \colon X \rightarrow GY$ 同伦, 则存在从 $\varphi f$ 到 $\varphi g$ 的左同伦 $H \colon \operatorname{Cyl} X \rightarrow GY$.
+    用类似的论证可以说明 $F(\operatorname{Cyl} X)$ 是 $\mathcal{D}$ 中的柱对象, 以及
+    $\varphi^{-1} H \colon F(\operatorname{Cyl} X) \rightarrow Y$ 是从 $f$ 到 $g$ 的左同伦, 这样 $\varphi^{-1}$ 与同伦关系相容.
+\end{proof}
+
+
+\begin{definition}
+    如果 Quillen 伴随 $(F,G) \colon \mathcal{C} \leftrightarrows \mathcal{D}$ 的导出伴随 
+    $(\mathbf{L}F, \mathbf{R}G) \colon \operatorname{Ho} \mathcal{C} \leftrightarrows \operatorname{Ho} \mathcal{D}$ 是范畴的伴随等价, 
+    也就是伴随的单位 $\eta \colon \mathbbm{1}_\mathcal{C} \rightarrow GF$ 和余单位 $\varepsilon \colon FG \rightarrow \mathbbm{1}_\mathcal{D}$ 是自然同构
+    那么 $(F,G)$ 称为{\bf Quillen 等价}.
+\end{definition}
+
+上述定义有几个等价形式:
+\begin{proposition}
+    \label{Quillen-equivalence-other-definitions}
+    设 $(F,G,\varphi) \colon \mathcal{C} \leftrightarrows \mathcal{D}$ 是 Quillen 伴随. 则下列命题等价:
+    \begin{enumerate}[(a)]
+        \item 如果 $X \in \mathcal{C}_\mathrm{c},~ Y \in \mathcal{D}_\mathrm{f}$, 则 $f \colon FX \rightarrow Y$ 是 $\mathcal{D}$ 中的弱等价当且仅当 
+        $\varphi f \colon X \rightarrow GY$ 是 $\mathcal{C}$ 中的弱等价.
+
+        \item 对任意 $X \in \mathcal{C}_\mathrm{c}$, 复合 $X \xrightarrow{\eta_X} GFX \xrightarrow{Gr_{FX}} GRFX$ 是弱等价,
+        以及对任意 $Y \in \mathcal{D}_\mathrm{f}$, 复合 $FQGY \xrightarrow{Fq_{GY}} FGY \xrightarrow{\varepsilon_Y} Y$ 是弱等价;
+        这里 $q \colon Q \rightarrow \mathbbm{1}_\mathcal{C}$ 和 $r \colon \mathbbm{1}_\mathcal{D} \rightarrow R$ 分别是余纤维性替换函子和纤维性替换函子相应的弱等价构成的自然变换.
+
+        \item $(F,G)$ 是 Quillen 等价.
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    参见 \cite[Prop.1.3.13]{hovey2007model}.
+    (a) 推 (b): 根据伴随函子的性质, 有 $\varphi r_{FX} = Gr_{FX} \circ \eta_X$. 而 $r_{FX} \colon FX \rightarrow RFX$ 是弱等价, 并且 $RFX$ 是 $\mathcal{D}$ 中的纤维性对象,
+    因此根据 (a) 就有 $\varphi r_{FX}$ 是弱等价. 类似地, $\varphi^{-1}(F q_{GY}) = \varepsilon_Y \circ Fq_{GY}$ 也是弱等价.
+
+    (b) 推 (a): 设 $X \in \mathcal{C}_\mathrm{c},~ Y \in \mathcal{D}_\mathrm{f}$, 以及 $f \colon FX \rightarrow Y$ 是 $\mathcal{D}$ 中的弱等价.
+    我们知道 $\varphi f = Gf \circ \eta_X \colon X \rightarrow GY$. 利用 $r$ 的自然性有如下交换图:
+    \[
+    \begin{tikzcd}
+        X \ar[r, "\eta_X"] & GFX \ar[r, "Gf"] \ar[d, "{Gr_{FX}}"'] & GY \ar[d, "Gr_Y"] \\
+        & GRFX \ar[r, "GRf"'] & GRY
+    \end{tikzcd}
+    \]
+    $f$ 是弱等价, 因此 $Rf$ 是纤维性对象之间的弱等价, 而 $G$ 保持纤维性对象之间的弱等价, 因此根据 (b) 就有 
+    \[
+    GRf \circ Gr_{FX} \circ \eta_X = Gr_Y \circ Gf \circ \eta_X = Gr_Y \circ \varphi f
+    \]
+    是弱等价. 而 $r_Y$ 也是纤维性对象之间的弱等价, 因此 $Gr_Y$ 是弱等价, 这样 $\varphi f$ 是弱等价. 
+    类似地, 从 $\varphi f$ 是弱等价和 $f = \varepsilon_Y \circ F \varphi f$ 可以得到 $f$ 是弱等价.
+
+    (b) 和 (c) 等价: 在 $\operatorname{Ho} \mathcal{D}$ 中, $\mathbf{L}F(X) = FQX$, 因为 $r_{FQX} \colon FQX \rightarrow RFQX$ 是弱等价, 所以在 $\operatorname{Ho} \mathcal{D}$ 中是同构.
+    从
+    \[
+    \operatorname{Ho} \mathcal{D}(\mathbf{L}F(X), \mathbf{L}F(X)) = \operatorname{Ho} \mathcal{D}(FQX, FQX),\quad \mathcal{D}(FQX, FQX) \cong \mathcal{C}(QX, GFQX)
+    \]
+    可以看出导出伴随的单位 $\eta_{QX}$ 在 $\operatorname{Ho} \mathcal{C}$ 同构等价于 $Gr_{FQX} \circ \eta_{QX}$ 同构, 也就是在 $\mathcal{C}$ 中是弱等价, 这就是 (b) 的第一个条件.
+    对偶地, 导出伴随的余单位 $\varepsilon_{RX}$ 的同构等价于 $Fq_{GRX} \circ \varepsilon_{RX}$ 同构, 也就是在 $\mathcal{D}$ 中是弱等价, 这就是 (b) 的第二个条件.
+\end{proof}
+
+\chapter{拓扑空间和链复形范畴上的模型结构}
+
+\chapter{单纯集}
+单纯集是无穷范畴最常见的模型. 本章给出单纯集的定义和单纯集范畴上的两个模型结构, 前者和拓扑空间范畴的标准模型结构 Quillen 等价, 后者用于模型范畴的构建.
+
+\section{单纯集的定义}
+\begin{definition}
+    $\mathbf{n}$ 是有限集 $\{0, 1, \dots, n\}$, 称为{\bf 标准单形(simplex)}. 标准单形 $\mathbf{n}, \mathbf{m}$ 之间的态射指的是保序映射, 也就是单调递增映射.
+    这样标准单形和它们之间的态射组成了一个范畴 $\mathbf{\Delta}$, 称为标准单形范畴.
+
+    设 $\mathcal{C}$ 是任意范畴, 那么从 $\mathbf{\Delta}$ 到 $\mathcal{C}$ 的协变函子称为 $\mathcal{C}$-值{\bf 余单纯对象(cosimplicial object)};
+    从 $\mathbf{\Delta}$ 到 $\mathcal{C}$ 的反变函子称为 $\mathcal{C}$-值{\bf 单纯对象(simplicial object)};
+    余单纯对象和单纯对象自然可以构成函子范畴. 最重要的单纯对象的例子就是 $\mathbf{Set}$-值单纯对象, 称为{\bf 单纯集}; 单纯集范畴记为 $\mathbf{sSet}$.
+\end{definition}
+
+设 $d^i \colon \mathbf{n-1} \rightarrow \mathbf{n}$ 为跳过 $i$ 的保序映射, $s^i \colon \mathbf{n+1} \rightarrow \mathbf{n}$ 是合并 $i,i+1$ 的保序映射, 也就是
+\[
+d^i(x) = 
+\begin{cases}
+    x &, 0 \leq x \leq i-1 \\
+    x+1 &, i \leq x \leq n+1
+\end{cases}
+\qquad
+s^i(x) = 
+\begin{cases}
+    x &, 0 \leq x \leq i \\
+    x-1 &, i+1 \leq x \leq n+1
+\end{cases}
+\]
+不难证明下列{\bf 余单纯恒等式}
+\begin{alignat*}{3}
+    d^j d^i &= d^i d^{j-1} &\quad &(i < j) \\
+    s^j d^i &= d^i s^{j-1} & &(i<j) \\
+    &= \mathbbm{1} & &(i = j, j+1) \\
+    &=d^{i-1} s^j & &(i > j+1) \\
+    s^j s^i &= s^{i-1} s^j & &(i >j)
+\end{alignat*}
+
+\begin{lemma}
+    \label{simplex-morphism-canonical-form}
+    每个态射 $f \colon \mathbf{n} \rightarrow \mathbf{m}$ 有唯一分解 $f = d s$, 这里 $d$ 是单射, 且是如下形式:
+    \[
+        d = d^{i_1} \cdots d^{i_r} \quad , 0 \leq i_r < \cdots < i_1 \leq m
+    \]
+    而 $s$ 是满射且有如下形式:
+    \[
+        s = s^{j_1} \cdots s^{j_t} \quad , 0 \leq j_1 < \cdots < j_t < n
+    \]
+\end{lemma}
+\begin{proof}
+    设 $i_r < \cdots < i_1$ 是 $\mathbf{m}$ 中不在 $f$ 的像中的元素, $j_1 < \cdots < j_t$ 是 $\mathbf{n}$ 中使得 $f(j) = f(j+1)$ 的元素. 
+    那么 $m-r$ 是 $f$ 的像中元素的数量, $n-t$ 是 $\mathbf{n}$ 中值不同的元素的数量, 因此也就是像中元素的数量. 设 $p=n-t=m-r$. 那么有
+    满射 $s = s^{j_1} \cdots s^{j_t}$ 和单射 $d = d^{i_1} \cdots d^{i_r}$ 以及复合
+    \[
+        \mathbf{n} \xrightarrow{s} \mathbf{p} \xrightarrow{d} \mathbf{m}
+    \]
+
+    接下来我们用归纳法证明 $f = ds$. 由于 $0$ 是最小的自然数, 因此 $s(0) = 0$. 若 $f(0) = 0$, 那么 $i_r >0$, 因而 $d(0)=0$, 所以 $f = ds$.
+    若 $f(0)>0$, 则 $0, \dots, f(0)-1$ 不在 $f$ 的像里面, 那么 $d$ 将有形式 $d = d^{i_1}\cdots d^{f(0)-1}\cdots d^0$.
+    注意 $d^{f(0)-1}\cdots d^0(0) = f(0)$, 而 $d$ 表达式里面 $d^{f(0)-1}$ 左边的映射必然都比 $f(0)$ 大因为 $f(0)$ 是像中的元素. 因此有 $d(0)=f(0)$,
+    这样还是有 $f(0)=ds(0)$.
+
+    若 $f(k) = ds(k)$, 那么 如果 $f(k)=f(k+1)$, 则 $k$ 在 $j_1, \dots, j_t$ 之中, 不妨设 $k=j_a$, 那么由于 $j_a$ 之后的都大于等于 $k$,
+    因此这些 $s^{j_{a+1}}$ 等作用在 $k,k+1$ 上不变, 而 $s^{j_a}(k) = k = s^{j_a}(k+1)$ 因此 $ds(k) = ds(k+1)$, 也就是说 $f(k+1)=ds(k+1)$.
+
+    如果 $f(k) < f(k+1)$, 则 $k$ 不在 $j_1, \dots, j_t$ 中, 于是 $s(k)+1 = s(k+1)$. 
+    我们知道 $f(k)+1, \dots, f(k+1)-1$ 在 $i_1,\dots,i_r$ 之中, 因此 $d=\cdots d^{f(k+1)-1}\cdots d^{f(k)+1} d'$,
+    这里 $d'(s(k))=f(k)$. 于是 $d'(s(k)+1)=f(k)+1$, 进而有 $ds(k+1)=d(s(k)+1)=f(k+1)$.
+\end{proof}
+
+\begin{definition}
+    如果 $K$ 是单纯集, 我们用 $K_n$ 来表示集合 $K(\mathbf{n})$. 如果 $x \in K_n$, 则把 $x$ 称为 $n$ 维单形. $K$ 作用在 $d^i$ 上得到 $d_i \colon K_n \rightarrow K_{n-1}$,
+    称为第 $i$ 个{\bf 面映射(face map)}; $K$ 作用在 $s_i \colon K_n \rightarrow K_{n+1}$, 称为第 $i$ 个{\bf 退化映射(degeneracy map)}.
+\end{definition}
+
+单纯集之间的面映射和退化映射显然要满足{\bf 单纯恒等式}
+\begin{alignat*}{3}
+    d_i d_j &= d_{j-1} d_i &\quad &(i < j) \\
+    d_i s_j &= s_{j-1} d_i & &(i<j) \\
+    &= \mathbbm{1} & &(i = j, j+1) \\
+    &= s_j d_{i-1} & &(i > j+1) \\
+    s_i s_j &= s_j s_{i-1} & &(i >j)
+\end{alignat*}
+
+单纯集之间的态射就是自然变换, 根据 \ref{simplex-morphism-canonical-form} 很容易得到下面结论
+\begin{lemma}
+    \label{simplicial-set-11-triple}
+    每个单纯集 $K$ 和三元组 $(K_\bullet, d_\bullet, s_\bullet)$ 一一对应, 这里 $K_\bullet$ 是集合序列 $K_0, K_1, \dots$, 而 $d_\bullet$ 和 $s_\bullet$ 由一系列态射组成:
+    $d_i \colon K_n \rightarrow K_{n-1}$ 以及 $s_i \colon K_n \rightarrow K_{n+1}$, 并且它们要满足上述单纯恒等式.
+\end{lemma}
 
 
 \printbibliography[heading=bibintoc, title=\ebibname]
