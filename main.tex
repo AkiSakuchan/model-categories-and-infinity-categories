@@ -6,7 +6,7 @@
 \usepackage{bbm}
 %\usepackage[colorlinks=true, linkcolor=blue, citecolor=red, urlcolor=cyan]{hyperref}
 
-\title{模型范畴与无穷范畴}
+\title{模型范畴}
 \author{Aki Sakuchan}
 \cover{sa60j-foyi1.png}
 
@@ -1260,6 +1260,10 @@ Kan 扩张可以表示范畴论中其他基础概念:
 
 \chapter{拓扑空间和链复形范畴上的模型结构}
 
+\section{序数, 基数和超限归纳法}
+一种很常用的构造模型结构的办法是使用超序归纳法的余纤维生成模型结构. 本质上是 CW-复形技术的推广.
+
+
 \chapter{单纯集}
 单纯集是无穷范畴最常见的模型. 本章给出单纯集的定义和单纯集范畴上的两个模型结构, 前者和拓扑空间范畴的标准模型结构 Quillen 等价, 后者用于模型范畴的构建.
 
@@ -1348,6 +1352,27 @@ s^i(x) =
     每个单纯集 $K$ 和三元组 $(K_\bullet, d_\bullet, s_\bullet)$ 一一对应, 这里 $K_\bullet$ 是集合序列 $K_0, K_1, \dots$, 而 $d_\bullet$ 和 $s_\bullet$ 由一系列态射组成:
     $d_i \colon K_n \rightarrow K_{n-1}$ 以及 $s_i \colon K_n \rightarrow K_{n+1}$, 并且它们要满足上述单纯恒等式.
 \end{lemma}
+
+\begin{example}
+\begin{itemize}
+    \item $\mathbf{n}$ 所表出的函子 $\hom_\mathbf{\Delta}(-, \mathbf{n})$ 显然就是单纯集, 这种单纯集我们称为{\bf 标准 $n$-单纯集}, 记为 $\Delta[n]$. 根据米田引理, 对任意单纯集 $X$ 有
+    \[
+    X_n \cong \mathbf{sSet}(\Delta[n], X)
+    \]
+
+    \item 两个单纯集 $X,Y$ 的乘积 $X \times Y$ 显然也是单纯集, 这里 $X \times Y \colon \mathbf{n} \mapsto X_n \times Y_n$.
+
+    \item 设 $|\Delta[n]|$ 是拓扑 $n$-标准单纯形, 也就是 $\Delta[n]$ 的几何实现, 更具体说就是如下拓扑空间
+    \[
+    |\Delta[n]| = \left\{ (x_0, \dots, x_n) \in \mathbb{R}^{n+1} \mid \sum_i x_i = 1,~ x_i \geq 0 \right\}
+    \]
+    对于保序映射 $\mathbf{n} \rightarrow \mathbf{m}$, 不难定义满足函子性的连续映射 $|\Delta[n]| \rightarrow |\Delta[m]|$, 因此 $|\Delta[-]|$ 本身是一个余单纯对象.
+    这样用于定义拓扑空间 $X$ 的奇异同调的奇异复形也是单纯集:
+    \[
+    (\mathrm{Sing} X)_n = \mathbf{Top}\big( |\Delta[n]|, X \big)
+    \]
+\end{itemize}
+\end{example}
 
 
 \printbibliography[heading=bibintoc, title=\ebibname]
